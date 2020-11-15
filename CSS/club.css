@@ -1,0 +1,31 @@
+#club_div {
+    display: flex;
+}
+
+#club_levy {
+    flex: 0 0 50%;
+    background-color: #FFF288;
+    margin: 15px;
+}
+
+#club_pravy {
+    flex: 1;
+    background-color: #FF9D88;
+    margin: 15px;
+}
+div > h3 {
+    text-align: center;
+    font-size: 35px;
+}
+#ikony {
+    width: 130px;
+    height: auto;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+.club_vypis {
+    font-family: Arial;
+    font-size: 22px;
+    margin: 20px;
+}

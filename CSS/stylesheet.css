@@ -1,0 +1,129 @@
+/* [HLAVICKA / MENU] */
+#menu {
+    background-color: black;
+    justify-content: space-between;
+    display:flex;
+    padding: 10px;
+}
+
+#menu a {
+    margin-right: 30px;
+    font-size: 20px;
+    color:white;
+    text-decoration-line: none;
+    text-shadow: 1px 1px 1px darkred;
+    font-family: Arial;
+}
+
+.logo > a img {
+    height: 80px;
+    border-radius: 25%;
+    margin: 0;
+}
+
+#nav {
+    padding-top: 30px;
+}
+
+#nav_prihlaseni {
+    padding-top: 30px;
+    padding-left: 50px;
+}
+/* [HERO] */
+.nadpis {
+    text-align: center;
+    color:white;
+    font-size: 100px;
+    padding-top: 150px;
+    text-shadow: 2px 2px 9px black;
+    margin: 0px;
+}
+
+#hero {
+    background-image: url("../IMG/titulka_sedacky.jpg");
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* [SECTION] */
+
+.body_index {
+    margin:0px;
+    background-color: black;
+}
+
+.body_index_form {
+    margin:0px;
+    background-color: #f4f4f4;
+}
+
+h2 {
+    color:white;
+    text-shadow: 1px 1px 1px black;
+    text-align: center;
+    font-size: 45px;
+}
+
+#h2_form {
+    color:black;
+    text-shadow: 1px 1px 1px white;
+    text-align: center;
+    font-size: 25px;
+}
+
+#h2_black {
+    color:black;
+}
+
+.galerie {
+    margin: auto;
+}
+
+#obrazky_galerie {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.obrazek_galerie > a img {
+    width: 210px;
+    height: 320px;
+    margin: 10px;
+}
+
+/* [PATICKA] */
+
+footer {
+    background-image: url("../IMG/paticka_obrazek.png");
+    justify-content: center;
+    color:black;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+
+#paticka {
+    background-image: url("../IMG/paticka_obrazek.png");
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 25px;
+}
+
+footer a {
+    color:white;
+    text-decoration-line: none;
+    font-size: 17px;
+}
+
+.paticka_nadpis > a {
+    color:white;
+    font-size: 25px;
+    font-family: Arial;
+    text-decoration-line: none;
+    text-shadow: 1px 1px 1px black;
+}

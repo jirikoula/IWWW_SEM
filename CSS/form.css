@@ -1,0 +1,110 @@
+/* [FORMULAR] */
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: content-box;
+    border: 1px solid black;
+}
+
+.radek_formular {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.formular_sekce {
+    background-color: #f4f4f4;
+    margin: auto;
+    width: 500px;
+    padding: 5px;
+}
+
+.formular_sekce_admin {
+    background-color: #f4f4f4;
+    margin: auto;
+    width: 1000px;
+    padding: 15px;
+    font-size: 20px;
+}
+
+/* [RADIO BUTTON] */
+
+#radiobutton_typ_vlastni {
+    margin-left: 70px;
+    display: none;
+    padding: 10px;
+}
+
+#radiobutton_typ_autobus {
+    margin-left: 50px;
+    display: none;
+}
+
+#radiobutton_typ_letecky {
+    margin-left: 50px;
+    display: none;
+    width: 200px;
+}
+
+.label_formular {
+    width: 200px;
+    display: block;
+    font-size: 20px;
+    color: black;
+    text-shadow: 1px 0px 0px white;
+    font-weight: bold;
+}
+
+#odkaz_registrace {
+    background-color: darkorange;
+    color: black;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    margin: auto;
+    width: 500px;
+    font-family: Arial
+}
+
+/* [TEXTAREA] */
+
+#textarea {
+    height: 300px;
+}
+
+/* [SUBMIT] */
+
+#submit {
+    background-color: darkorange;
+    text-align: center;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* [RESPOZIVNÍ ZOBRAZENÍ - FORMULÁŘ] */
+@media screen and (max-width: 834px) {
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        box-sizing: content-box;
+        border: 1px solid black;
+    }
+
+    .formular_sekce {
+        margin: auto;
+        width: 100%;
+        padding: 0px;
+    }
+
+    .formular_sekce_admin {
+        margin: auto;
+        width: 100%;
+        padding: 0px;
+    }
+}

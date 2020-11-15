@@ -1,0 +1,22 @@
+#program nav > ul > li > a:link, #program nav > ul > li > a:visited {
+    background-color: darkorange;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    list-style-type: none;
+}
+
+#program nav > ul > li > a:hover, #program nav > ul > li > a:active {
+    background-color: orange;
+    list-style-type: none;
+}
+
+.program_tlacitka {
+    display: inline;
+}
+.program_tlacitko {
+    list-style: none;
+    display: inline;
+}
