@@ -19,9 +19,9 @@
         <div>
             <span class="paticka_nadpis"><a href="#">Ostatní služby</a></span>
             <ul>
-                <li><a href="#">Kino pro školy</a></li>
-                <li><a href="#">Občerstvení</a></li>
-                <li><a href="#">Pronájem sálu</a></li>
+                <li><a href="#">DVD filmy</a></li>
+                <li><a href="#">Blu-ray filmy</a></li>
+                <li><a href="#">George Movies Club</a></li>
             </ul>
         </div>
     </footer>

@@ -65,9 +65,9 @@ if($_POST) {
         <div class="radek_formular">
             <label class="label_formular">Kategorie dotazu: </label>
             <select id="kategorie" name="kategorie">
-                <option>Pronájem sálu</option>
-                <option>George Club</option>
-                <option>Program</option>
+                <option>Zařazení filmu do nabídky</option>
+                <option>George Movies Club</option>
+                <option>Reklamace</option>
                 <option>Stížnost</option>
                 <option>Jiné</option>
             </select>

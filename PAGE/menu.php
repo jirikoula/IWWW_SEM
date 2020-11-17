@@ -6,9 +6,10 @@
     <input type="checkbox" id="hamburger"/>
 
     <nav id="nav">
-        <a href="program.php">PROGRAM</a>
-        <a href="movies.php">FILMY</a>
-        <a href="george_club.php">GEORGE CLUB</a>
+        <a href="new_movies.php">NOVÉ FILMY</a>
+        <a href="dvd_movies.php">DVD FILMY</a>
+        <a href="blu_ray_movies.php">BLU-RAY FILMY</a>
+        <a href="george_club.php">GEORGE MOVIES CLUB</a>
         <a href="form.php">KONTAKT</a>
     </nav>
     <nav id="nav_prihlaseni">

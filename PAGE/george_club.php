@@ -3,23 +3,16 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <title>George Cinema</title>
-    <link rel="stylesheet" href="../CSS/stylesheet.css">
-    <link rel="stylesheet" href="../CSS/stylesheet_responsive.css">
-    <link rel="stylesheet" href="../CSS/form.css">
-    <link rel="stylesheet" href="../CSS/menu.css">
-    <link rel="stylesheet" href="../CSS/club.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<?php
+include "html_head.php";
+?>
 <body class ="body_index_form">
 
 <?php
 include "menu.php";
 ?>
 
-<h2 id="h2_black">George Club</h2>
+<h2 id="h2_black">George Movies Club</h2>
 
 <div id="club_div">
     <img id="ikony" src="../IMG/pop_corn_ikona.png" alt="Popcorn">
@@ -34,18 +27,18 @@ include "menu.php";
         <ul class="club_vypis">
             <li>Registrací na stránce se automaticky stáváme členem</li>
             <li>Vystavení karty na pokladně je za poplatek 250 Kč</li>
-            <li>Při zaplacení na pokaldně získáváte věrnostní body</li>
+            <li>Při zaplacení na pokladně získáváte věrnostní body</li>
         </ul>
     </div>
     <div id="club_pravy">
         <h3>Výhody členství:</h3>
         <ul class="club_vypis">
-            <li>Sleva 20 Kč na vstupenku při platbě na pokladně</li>
+            <li>Sleva 3% na každý nákup</li>
             <li>Pravidelné slevové akce u partnerů</li>
-            <li>Speciální VIP projekce</li>
-            <li>Sleva na občestvení dle aktulní nabídky</li>
+            <li>Na narozeniny malý dárek - lístek do kina</li>
+            <li>Sleva na dopravu dle aktulní nabídky</li>
             <li>Nejnovější informace o filmech</li>
-            <li>Happy hour 2x více bodů za představení</li>
+            <li>Happy hour 2x více věrnostních bodů za nákup filmu</li>
         </ul>
     </div>
 </div>
