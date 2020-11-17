@@ -32,16 +32,17 @@
 /* [HERO] */
 .nadpis {
     text-align: center;
-    color:white;
-    font-size: 100px;
+    color:orange;
+    font-size: 120px;
     padding-top: 150px;
     text-shadow: 2px 2px 9px black;
     margin: 0px;
+    -webkit-text-stroke: 3px black;
 }
 
 #hero {
-    background-image: url("../IMG/titulka_sedacky.jpg");
-    height: 400px;
+    background-image: url("../IMG/titulka_filmy.jpg");
+    height: 500px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
