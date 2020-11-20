@@ -20,6 +20,7 @@ include "menu.php";
 <div class="galerie">
     <h2>Brzy v nabídce</h2>
 </div>
+
 <?php
 include "../FILMY/prehled_filmy.php";
 include "footer.php";

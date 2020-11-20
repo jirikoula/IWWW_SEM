@@ -29,6 +29,7 @@
     padding-top: 30px;
     padding-left: 50px;
 }
+
 /* [HERO] */
 .nadpis {
     text-align: center;
@@ -74,10 +75,6 @@ h2 {
     font-size: 25px;
 }
 
-#h2_black {
-    color:black;
-}
-
 .galerie {
     margin: auto;
 }
@@ -93,6 +90,83 @@ h2 {
     width: 210px;
     height: 320px;
     margin: 10px;
+}
+
+/* [KOSIK] */
+#h2_black {
+    color:black;
+}
+
+#h2_kosik {
+    font-size: 40px;
+    color:black;
+    text-align: center;
+    padding-left: 50px;
+    margin: auto;
+}
+
+#h2_kosik_vybrano {
+    font-size: 40px;
+    color:orangered;
+    text-align: center;
+    padding-left: 50px;
+}
+
+.sekce_kosik {
+    background-color: #f4f4f4;
+    margin: auto;
+    width: 60%;
+    padding: 5px;
+}
+
+#kosik_nadpis {
+    display: flex;
+}
+
+#h3_doprava {
+    font-size: 25px;
+}
+
+/* ZDROJ: W3 school (následujících 6 stylů - upraveno) */
+.label_radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.label_radio input {
+    opacity: 0;
+    cursor: pointer;
+}
+
+.doprava_radiobutton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.label_radio:hover input ~ .doprava_radiobutton {
+    background-color: #AAAAAA;
+}
+
+.label_radio input:checked ~ .doprava_radiobutton {
+    background-color: orangered;
+}
+
+.label_radio .doprava_radiobutton:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #333333;
 }
 
 /* [PATICKA] */
@@ -113,6 +187,7 @@ footer {
     background-repeat: no-repeat;
     background-size: cover;
     font-size: 25px;
+    margin-top: 200px;
 }
 
 footer a {

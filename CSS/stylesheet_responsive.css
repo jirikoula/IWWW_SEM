@@ -50,6 +50,39 @@
         margin: 0px;
     }
 
+    /* [KOSIK] */
+
+    #h2_kosik {
+        font-size: 20px;
+        padding-left: 10px;
+
+    }
+
+    #h2_kosik_vybrano {
+        font-size: 20px;
+        padding-left: 10px;
+    }
+
+    .sekce_kosik {
+        background-color: #f4f4f4;
+        margin: auto;
+        width: 90%;
+        padding: 5px;
+    }
+
+    #h3_doprava {
+        font-size: 16px;
+    }
+
+    .label_radio {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
     /* [PATICKA] */
 
     footer {
