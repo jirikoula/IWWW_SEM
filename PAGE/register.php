@@ -73,17 +73,8 @@ if ($_POST) {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class="body_index_form">
-<?php
-include "menu.php";
-?>
 <section class="formular_sekce">
-    <form action="register.php" method="post">
+    <form action="index.php?page=register" method="post">
         <h2 id="h2_form">REGISTRACE</h2>
 
         <div class="radek_formular">
@@ -102,7 +93,7 @@ include "menu.php";
             <input id="submit" type="submit">
         </div>
         <div class="radek_formular">
-            <a id=odkaz_registrace href="../PAGE/login.php">Přihlásit se</a>
+            <a id=odkaz_registrace href="index.php?page=login">Přihlásit se</a>
         </div>
     </form>
 </section>
@@ -130,5 +121,3 @@ if ($emailPouzity == 1) {
     echo "<div style ='font-size:20px; color:darkorange; text-align: center;'> Email je již registrovaný pod jiným uživatelem!</div>";
 }
 ?>
-</body>
-</html>

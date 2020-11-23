@@ -45,7 +45,7 @@ if($_POST) {
     }
     ?>
     <h2 id="h2_form">NAPIŠTE NÁM</h2>
-    <form action="form.php" method="post">
+    <form action="index.php?page=form" method="post">
         <div class="radek_formular">
             <label class="label_formular">Jméno: </label>
             <input name="jmeno" type="text" required>

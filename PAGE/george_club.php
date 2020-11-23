@@ -1,17 +1,3 @@
-<?php
-session_start();
-?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class ="body_index_form">
-
-<?php
-include "menu.php";
-?>
-
 <h2 id="h2_black">George Movies Club</h2>
 
 <div id="club_div">
@@ -48,10 +34,3 @@ include "menu.php";
 <div class="radek_formular">
     <a id=odkaz_registrace href="../PAGE/login.php">JIŽ JSEM ČLENEM</a>
 </div>
-
-<?php
-include "footer.php";
-?>
-
-</body>
-</html>

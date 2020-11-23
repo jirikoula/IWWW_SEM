@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 $servername = "localhost";
 $username = "root";
@@ -47,16 +46,6 @@ if ($_POST) {
     }
 }
 
-?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class ="body_index_form">
-
-<?php
-include "menu.php";
 if($_SESSION["role"] == 1) {
 ?>
 <section class="formular_sekce">
@@ -177,5 +166,4 @@ if ($chyba_ucet == 1) {
     echo "<div style ='font-size:20px; color:red; text-align: center;'> CHYBA </div>";
 }
 ?>
-</body>
-</html>
+</section>

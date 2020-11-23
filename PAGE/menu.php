@@ -5,11 +5,11 @@
     <label for="hamburger">&#9776;</label>
     <input type="checkbox" id="hamburger"/>
     <nav id="nav">
-        <a href="new_movies.php">NOVÉ FILMY</a>
-        <a href="dvd_movies.php">DVD FILMY</a>
-        <a href="blu_ray_movies.php">BLU-RAY FILMY</a>
-        <a href="george_club.php">GEORGE CLUB</a>
-        <a href="form.php">KONTAKT</a>
+        <a href="index.php?page=new_movies">NOVÉ FILMY</a>
+        <a href="index.php?page=dvd_movies">DVD FILMY</a>
+        <a href="index.php?page=blu_ray_movies">BLU-RAY FILMY</a>
+        <a href="index.php?page=george_club">GEORGE CLUB</a>
+        <a href="index.php?page=form">KONTAKT</a>
     </nav>
     <style>
         #img_kosik {
@@ -19,13 +19,13 @@
     <nav id="nav_prihlaseni">
         <?php
         if (isset($_SESSION["isLogged"]) == true) {
-            echo '<a href="../PAGE/shopping_cart.php">KOŠÍK  <img id="img_kosik" src="../IMG/nakupni_kosik.jpg" alt="nákupní košík"></a>';
-            echo '<a href="../PAGE/account.php">MŮJ ÚČET</a>';
-            echo '<a href="../PAGE/logout.php">ODHLÁSIT SE</a>';
+            echo '<a href="index.php?page=shopping_cart">KOŠÍK  <img id="img_kosik" src="../IMG/nakupni_kosik.jpg" alt="nákupní košík"></a>';
+            echo '<a href="index.php?page=account">MŮJ ÚČET</a>';
+            echo '<a href="index.php?page=logout">ODHLÁSIT SE</a>';
             echo '<a href="#">Přihlášen: ' . $_SESSION["uzivatelske_jmeno"] . '</a>';
         } else {
-            echo '<a href="../PAGE/shopping_cart.php">KOŠÍK  <img id="img_kosik" src="../IMG/nakupni_kosik.jpg" alt="nákupní košík"></a>';
-            echo '<a href="../PAGE/login.php">PŘIHLÁSIT SE</a>';
+            echo '<a href="index.php?page=shopping_cart">KOŠÍK  <img id="img_kosik" src="../IMG/nakupni_kosik.jpg" alt="nákupní košík"></a>';
+            echo '<a href="index.php?page=login">PŘIHLÁSIT SE</a>';
         }
         ?>
     </nav>

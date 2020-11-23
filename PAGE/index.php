@@ -7,22 +7,26 @@ session_start();
 <?php
 include "html_head.php";
 ?>
-<body class ="body_index">
+<body class ="body_index_form">
 
 <?php
 include "menu.php";
 ?>
 
-<section id="hero">
-    <h1 class="nadpis">George Movies</h1>
-</section>
+<?php
+$pathToFile = null;
+if(!empty($_GET["page"])){
+    $pathToFile = $_GET["page"] . ".php";
+}
+if (file_exists($pathToFile)) {
+    include $pathToFile;
+} else {
+    include "mainPage.php";
+}
+?>
 
-<div class="galerie">
-    <h2>Brzy v nabídce</h2>
-</div>
 
 <?php
-include "../FILMY/prehled_filmy.php";
 include "footer.php";
 ?>
 

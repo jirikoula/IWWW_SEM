@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -69,17 +67,8 @@ if($_POST){
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class ="body_index_form">
-<?php
-include "menu.php";
-?>
 <section class="formular_sekce">
-<form action="login.php" method="post">
+<form action="index.php?page=login" method="post">
     <h2 id="h2_form">PŘIHLÁŠENÍ</h2>
 
     <div class="radek_formular">
@@ -94,7 +83,7 @@ include "menu.php";
         <input id="submit" type="submit">
     </div>
     <div class="radek_formular">
-        <a id=odkaz_registrace href="../PAGE/register.php">Registrovat se</a>
+        <a id=odkaz_registrace href="index.php?page=register">Registrovat se</a>
     </div>
 </form>
 </section>
@@ -112,5 +101,3 @@ if ($spatne_jmeno_heslo == 1) {
     echo "<div style ='font-size:20px; color:darkorange; text-align: center;'> Kombinace uživatelského jména a hesla je špatná! </div>";
 }
 ?>
-</body>
-</html>

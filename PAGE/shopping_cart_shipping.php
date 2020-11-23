@@ -1,17 +1,3 @@
-<?php
-session_start();
-?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class ="body_index_form">
-
-<?php
-include "menu.php";
-?>
-
 <section class="sekce_kosik">
     <div id="kosik_nadpis">
         <h2 id="h2_kosik">Košík</h2>
@@ -41,15 +27,9 @@ include "menu.php";
 
 
     <div class="radek_formular">
-        <a id=odkaz_kosik href="../PAGE/shopping_cart.php">Zpět</a>
+        <a id=odkaz_kosik href="index.php?page=shopping_cart">Zpět</a>
     </div>
     <div class="radek_formular">
-        <a id=odkaz_kosik href="../PAGE/shopping_cart_address.php">Pokračovat</a>
+        <a id=odkaz_kosik href="index.php?page=shopping_cart_address">Pokračovat</a>
     </div>
 </section>
-<?php
-include "footer.php";
-?>
-
-</body>
-</html>
