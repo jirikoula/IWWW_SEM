@@ -83,7 +83,7 @@ if($_POST){
         <input id="submit" type="submit">
     </div>
     <div class="radek_formular">
-        <a id=odkaz_registrace href="index.php?page=register">Registrovat se</a>
+        <a class="tlacitko_univerzalni" href="index.php?page=register">Registrovat se</a>
     </div>
 </form>
 </section>

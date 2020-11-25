@@ -13,7 +13,7 @@ try {
     $stmt->bindParam(':id', $_GET["id"]);
     $stmt->execute();
     if ($stmt->rowCount() == 1) {
-        header("location: account.php");
+        header("location: index.php?page=account");
     }
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();

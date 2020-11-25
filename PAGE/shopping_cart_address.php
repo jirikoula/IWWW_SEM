@@ -41,10 +41,10 @@
         </div>
 
         <div class="radek_formular">
-            <input id=odkaz_kosik type="submit" value="Dokončit objednávku">
+            <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Zpět</a>
         </div>
         <div class="radek_formular">
-            <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Zpět</a>
+            <input id=odkaz_kosik type="submit" value="Dokončit objednávku">
         </div>
     </form>
 </section>

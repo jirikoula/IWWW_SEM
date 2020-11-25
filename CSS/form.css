@@ -71,6 +71,23 @@ input, select, textarea {
     font-family: Arial
 }
 
+.tlacitko_univerzalni {
+    background-color: darkorange;
+    color: black;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    margin: auto;
+    width: 500px;
+    font-family: Arial
+}
+
+/* [KOSIK] */
+
 #odkaz_kosik {
     background-color: darkorange;
     color: black;

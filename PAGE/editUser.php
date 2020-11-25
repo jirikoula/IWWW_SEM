@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':jmeno', $jmeno_nove);
         $stmt->bindParam(':prijmeni', $prijmeni_nove);
         $stmt->execute();
-        header("Location: account.php");
+        header("Location: index.php?page=account");
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }

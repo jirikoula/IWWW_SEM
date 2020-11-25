@@ -6,7 +6,7 @@
     <input type="checkbox" id="hamburger"/>
     <nav id="nav">
         <a href="index.php?page=new_movies">NOVÉ FILMY</a>
-        <a href="index.php?page=dvd_movies">DVD FILMY</a>
+        <a href="index.php?page=dvd_movies&action=add&id=">DVD FILMY</a>
         <a href="index.php?page=blu_ray_movies">BLU-RAY FILMY</a>
         <a href="index.php?page=george_club">GEORGE CLUB</a>
         <a href="index.php?page=form">KONTAKT</a>

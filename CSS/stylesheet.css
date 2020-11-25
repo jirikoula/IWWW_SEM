@@ -131,10 +131,10 @@ h2 {
 .label_radio {
     display: block;
     position: relative;
-    padding-left: 35px;
+    padding-left: 32px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 .label_radio input {
