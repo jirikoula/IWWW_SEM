@@ -44,7 +44,7 @@
             <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Zpět</a>
         </div>
         <div class="radek_formular">
-            <input id=odkaz_kosik type="submit" value="Dokončit objednávku">
+            <input id=odkaz_kosik type="submit" value="Dokončit objednávku" name="order">
         </div>
     </form>
 </section>

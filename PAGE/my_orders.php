@@ -16,7 +16,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stmt->execute();
     while ($row = $stmt->fetch()) {
         ?>
-        <p class="odstavec_ucet">Objednávka <?php echo $row["id"] ?></p>
+        <p class="odstavec_ucet">Objednávka č. <?php echo $row["id"] ?></p>
         <a class="tlacitko_univerzalni_ucet" href="index.php?page=my_orders_detail&id=<?php echo $row["id"] ?>">Zobrazit</a><br>
         <?php
     }
