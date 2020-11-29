@@ -1,10 +1,9 @@
 <?php
 session_start();
-
+ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="cs">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css ">
 <?php
 include "html_head.php";
 ?>

@@ -9,7 +9,7 @@
 </section>
 
 <section class="formular_sekce">
-    <form action="order_summary.php" method="post">
+    <form action="index.php?page=order_summary" method="post">
 
         <div class="radek_formular">
             <label class="label_formular">Jméno: </label>

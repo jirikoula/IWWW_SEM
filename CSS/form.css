@@ -86,6 +86,32 @@ input, select, textarea {
     font-family: Arial
 }
 
+.tlacitko_univerzalni_ucet {
+    background-color: darkorange;
+    color: black;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 15px;
+    margin: auto;
+    width: 100px;
+    font-family: Arial;
+    margin-bottom: 50px;
+}
+
+.odstavec_ucet {
+    font-weight: bold;
+}
+
+.odstavec_detail {
+    font-weight: bold;
+    font-size: 18px;
+    color: darkorange;
+}
+
 /* [KOSIK] */
 
 #odkaz_kosik {
