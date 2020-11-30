@@ -1,23 +1,15 @@
 <?php
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "databaze_kino";
-
-$conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+include '../FUNCTIONS/functions.php';
+$conn = connectToDatabase();
 
 $validation[] = NULL;
 $ulozeno = 0;
 $chyba_ucet = 0;
 
-$sql = "SELECT uzivatelske_jmeno, email, jmeno, prijmeni FROM uzivatele WHERE id = :id";
+$stmt = $conn->prepare("SELECT uzivatelske_jmeno, email, jmeno, prijmeni FROM uzivatele WHERE id = :id");
+$stmt->bindValue("id", $_SESSION["id"], PDO::PARAM_INT);
+$stmt->execute();
 
-if ($stmt = $conn->prepare($sql)) {
-    $stmt->bindValue("id", $_SESSION["id"], PDO::PARAM_INT);
-    $stmt->execute();
-}
 
 if ($_POST) {
     try {

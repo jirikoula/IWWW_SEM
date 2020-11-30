@@ -5,17 +5,10 @@
     <label for="hamburger">&#9776;</label>
     <input type="checkbox" id="hamburger"/>
     <nav id="nav">
-        <a href="index.php?page=new_movies">NOVÉ FILMY</a>
-        <a href="index.php?page=dvd_movies&action=add&id=">DVD FILMY</a>
-        <a href="index.php?page=blu_ray_movies">BLU-RAY FILMY</a>
+        <a href="index.php?page=movies&action=add&id=">FILMY</a>
         <a href="index.php?page=george_club">GEORGE CLUB</a>
-        <a href="index.php?page=form">KONTAKT</a>
+        <a href="index.php?page=kontakt_formular">KONTAKT</a>
     </nav>
-    <style>
-        #img_kosik {
-            height: 18px;
-        }
-    </style>
     <nav id="nav_prihlaseni">
         <?php
         if (isset($_SESSION["isLogged"]) == true) {

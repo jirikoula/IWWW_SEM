@@ -1,8 +1,6 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "databaze_kino";
+include '../FUNCTIONS/functions.php';
+$conn = connectToDatabase();
 
 //zdroj: stackoverflow (následující dvě funkce)
 function getBy($att, $value, $array)
@@ -31,11 +29,10 @@ function createCatalog($pdo)
     return $arr;
 }
 
-$conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $catalog = createCatalog($conn);
 
 if (isset($_POST["order"])) {
+    //Lze to mít v transakci
     $sql = 'INSERT INTO objednavky(id_uzivatel) VALUES(' . $_SESSION["id"] . ')';
     $conn->query($sql);
     $sql = "SELECT id FROM objednavky ORDER BY id DESC LIMIT 1";

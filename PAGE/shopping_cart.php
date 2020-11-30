@@ -8,78 +8,9 @@
     </div>
 </section>
 <section>
-    <style>
-        .kosik_polozka {
-            display: grid;
-            grid-column-gap: 3%;
-            grid-auto-columns: auto;
-            margin-top: 5%;
-            margin-left: 10%;
-            margin-right: 10%;
-        }
-        .kosik_obrazek {
-            height: 100px;
-            grid-column:1;
-        }
-        #h3_cena {
-            font-size: 22px;
-            margin-right: 10%;
-            padding-left: 75%
-        }
-        #sloupec_2 {
-            grid-column:2;
-        }
-        #sloupec_3 {
-            grid-column:3;
-        }
-        #sloupec_4 {
-            grid-column:4;
-            text-align: center;
-        }
-        #sloupec_5 {
-            grid-column:5;
-            color:black;
-            text-decoration: none;
-            font-size: 30px;
-            font-weight: bold;
-            padding-right: 10px;
-        }
-        #sloupec_6 {
-            grid-column:6;
-        }
-        #sloupec_7 {
-            grid-column:7;
-            color:black;
-            text-decoration: none;
-            font-size: 30px;
-            font-weight: bold;
-            padding-right: 10px;
-        }
-        #sloupec_8 {
-            grid-column:8;
-            text-align: center;
-        }
-        #sloupec_9 {
-            grid-column:9;
-            color:red;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
-            padding-right: 10px;
-            margin-top: 75%;
-        }
-        .kosik_nadpis {
-            font-weight: bold;
-        }
-    </style>
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $db = "databaze_kino";
-
-    $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include '../FUNCTIONS/functions.php';
+    $conn = connectToDatabase();
 
     $totalPrice = 0;
     if (empty($_SESSION["cart"]) == false) {
@@ -124,17 +55,17 @@
     </div>
     <?php
     if (isset($_SESSION["isLogged"]) == true) {
-    ?>
-    <div class="radek_formular">
-        <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Pokračovat</a>
-    </div>
-    <?php
+        ?>
+        <div class="radek_formular">
+            <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Pokračovat</a>
+        </div>
+        <?php
     } else {
         ?>
         <div class="radek_formular">
             <a id=odkaz_kosik href="index.php?page=login">PRO POKRAČOVÁNÍ SE MUSÍTE PŘIHLÁSIT!</a>
         </div>
-    <?php
+        <?php
     }
     ?>
 </section>

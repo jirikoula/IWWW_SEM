@@ -1,23 +1,17 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "databaze_kino";
-
-$conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+include '../FUNCTIONS/functions.php';
+include '../SQL/sql_commands.php';
 ?>
 <h2 id="h2_form">MOJE OBJEDNÁVKY</h2>
 
 <section class="formular_sekce">
     <?php
-    $sql = "SELECT * FROM objednavky WHERE id_uzivatel = " . $_SESSION["id"];
-    $stmt = $conn->query($sql);
-    $stmt->execute();
-    while ($row = $stmt->fetch()) {
+    $stmt = selectAllFromObjednavky();
+
+    while ($radek = $stmt->fetch()) {
         ?>
-        <p class="odstavec_ucet">Objednávka č. <?php echo $row["id"] ?></p>
-        <a class="tlacitko_univerzalni_ucet" href="index.php?page=my_orders_detail&id=<?php echo $row["id"] ?>">Zobrazit</a><br>
+        <p class="odstavec_ucet">Objednávka č. <?php echo $radek["id"] ?></p>
+        <a class="tlacitko_univerzalni_ucet" href="index.php?page=my_orders_detail&id=<?php echo $radek["id"] ?>">Zobrazit</a><br>
         <?php
     }
     ?>

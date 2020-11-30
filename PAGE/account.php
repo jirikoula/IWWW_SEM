@@ -1,51 +1,28 @@
 <?php
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "databaze_kino";
-
-$conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+include '../FUNCTIONS/functions.php';
+$conn = connectToDatabase();
 
 if($_SESSION["role"] == 1) {
-?>
-<section class="formular_sekce">
-    <form action="index.php?page=account" method="post">
-        <h2 id="h2_form">MŮJ ÚČET</h2>
+    ?>
+    <section class="formular_sekce">
+        <form action="index.php?page=account" method="post">
+            <h2 id="h2_form">MŮJ ÚČET</h2>
 
-        <div class="radek_formular">
-            <a class="tlacitko_univerzalni" href="index.php?page=profile_settings">Upravit profil</a>
-        </div>
-        <div class="radek_formular">
-            <a class="tlacitko_univerzalni" href="index.php?page=my_orders">Moje objednávky</a>
-        </div>
-    </form>
-</section>
-<?php
+            <div class="radek_formular">
+                <a class="tlacitko_univerzalni" href="index.php?page=profile_settings">Upravit profil</a>
+            </div>
+            <div class="radek_formular">
+                <a class="tlacitko_univerzalni" href="index.php?page=my_orders">Moje objednávky</a>
+            </div>
+        </form>
+    </section>
+    <?php
 } else {
     //zdroj: w3school, editováno
-?>
+    ?>
     <section class="formular_sekce_admin">
         <h2 id="h2_form">UŽIVATELÉ</h2>
         <table>
-            <style>
-                table {
-                    border: solid 1px black;
-                    text-align: center;
-                    border-collapse: collapse;
-                }
-
-                th {
-                    padding: 5px;
-                }
-
-                td {
-                    width:150px;
-                    border:1px solid black;
-                    padding: 5px;
-                }
-            </style>
             <tr>
                 <th>Id</th>
                 <th>Uživ. jméno</th>
@@ -79,7 +56,6 @@ if($_SESSION["role"] == 1) {
                         "<td><a href='deleteUser.php?id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
                 }
             }
-
 
             try {
                 $stmt = $conn->prepare("SELECT id, uzivatelske_jmeno, email, jmeno, prijmeni, role FROM uzivatele");

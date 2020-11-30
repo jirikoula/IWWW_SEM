@@ -1,40 +1,13 @@
 <?php
+include '../SQL/sql_commands.php';
+include '../FUNCTIONS/functions.php';
+$conn = connectToDatabase();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "databaze_kino";
 $formularOdeslan = 0;
 
 if($_POST) {
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$db", $username, $password);
-
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $jmeno = $_POST["jmeno"];
-        $prijmeni = $_POST["prijmeni"];
-        $email = $_POST["email"];
-        $telefon = $_POST["telefon"];
-        $zprava = $_POST["zprava"];
-        $kategorie = $_POST["kategorie"];
-
-        $stmt = $conn->prepare("INSERT INTO formular (jmeno, prijmeni, email, telefon, zprava, kategorie) VALUES (:jmeno, :prijmeni, :email, :telefon, :zprava, :kategorie)");
-
-        $stmt->bindParam(':jmeno', $jmeno);
-        $stmt->bindParam(':prijmeni', $prijmeni);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telefon', $telefon);
-        $stmt->bindParam(':zprava', $zprava);
-        $stmt->bindParam(':kategorie', $kategorie);
-
-        $stmt->execute();
-
-        $formularOdeslan = 1;
-
-    } catch (PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    $stmt = insertIntoFormular();
+    $formularOdeslan = 1;
 }
 
 ?>
@@ -45,7 +18,7 @@ if($_POST) {
     }
     ?>
     <h2 id="h2_form">NAPIŠTE NÁM</h2>
-    <form action="index.php?page=form" method="post">
+    <form action="index.php?page=kontakt_formular" method="post">
         <div class="radek_formular">
             <label class="label_formular">Jméno: </label>
             <input name="jmeno" type="text" required>
