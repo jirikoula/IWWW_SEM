@@ -24,6 +24,19 @@ function addToCart($productId)
     }
 }
 
+function cart_manager($action, $id)
+{
+    if($action == "add") {
+        addToCart_in_cart($id);
+    }
+    if($action == "remove") {
+        removeFromCart($id);
+    }
+    if($action == "delete") {
+        deleteFromCart($id);
+    }
+}
+
 function addToCart_in_cart($productId)
 {
     if (!array_key_exists($productId, $_SESSION["cart"])) {

@@ -3,8 +3,7 @@
 function selectAllFromObjednavky() {
     $conn = connectToDatabase();
 
-    $sql = "SELECT * FROM objednavky WHERE id_uzivatel = " . $_SESSION["id"];
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT * FROM objednavky WHERE id_uzivatel = " . $_SESSION["id"]);
     $stmt->execute();
 
     return $stmt;
@@ -13,8 +12,7 @@ function selectAllFromObjednavky() {
 function selectAllFromObjednavkyWhereIdEqualsId($id_objednavky) {
     $conn = connectToDatabase();
 
-    $sql = "SELECT * FROM objednavky WHERE id_uzivatel = " . $_SESSION["id"] . " AND id = " . $id_objednavky;
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT * FROM objednavky WHERE id_uzivatel = " . $_SESSION["id"] . " AND id = " . $id_objednavky);
     $stmt->execute();
 
     return $stmt;
@@ -23,8 +21,7 @@ function selectAllFromObjednavkyWhereIdEqualsId($id_objednavky) {
 function selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky) {
     $conn = connectToDatabase();
 
-    $sql = "SELECT * FROM objednavka_polozky WHERE id_objednavka = '$id_objednavky'";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT * FROM objednavka_polozky WHERE id_objednavka = '$id_objednavky'");
     $stmt->execute();
 
     return $stmt;
@@ -33,17 +30,27 @@ function selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky) {
 function selectNazevFromProduktyWhereIDEqualsId($id_produkt) {
     $conn = connectToDatabase();
 
-    $sql = "SELECT nazev FROM produkty WHERE ID = '$id_produkt'";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare("SELECT nazev FROM produkty WHERE ID = '$id_produkt'");
     $stmt->execute();
+    $nazev = $stmt->fetch();
 
-    return $stmt;
+    return $nazev;
 }
 
 function selectAllFromProdukty() {
     $conn = connectToDatabase();
 
     $stmt = $conn->prepare(" SELECT * FROM produkty");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyBind($key) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE ID = :ID");
+    $stmt->bindParam(':ID', $key);
     $stmt->execute();
 
     return $stmt;

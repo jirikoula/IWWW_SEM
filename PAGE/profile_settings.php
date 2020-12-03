@@ -1,4 +1,5 @@
 <?php
+include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -6,19 +7,14 @@ $validation[] = NULL;
 $ulozeno = 0;
 $chyba_ucet = 0;
 
-$stmt = $conn->prepare("SELECT uzivatelske_jmeno, email, jmeno, prijmeni FROM uzivatele WHERE id = :id");
-$stmt->bindValue("id", $_SESSION["id"], PDO::PARAM_INT);
-$stmt->execute();
-
+$stmt = selectFromUzivatele();
 
 if ($_POST) {
     try {
         if(empty($_POST["heslo"]) == true) {
-            $sql = "UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id";
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id");
         } else {
-            $sql = "UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni, heslo = :heslo WHERE id = :id";
-            $stmt = $conn->prepare($sql);
+            $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni, heslo = :heslo WHERE id = :id");
             $param_heslo = $_POST["heslo"];
             $hashPassword = password_hash($param_heslo, PASSWORD_DEFAULT);
             $stmt->bindParam(":heslo", $hashPassword, PDO::PARAM_STR);
@@ -33,7 +29,6 @@ if ($_POST) {
 
         $_SESSION["jmeno"] = $param_jmeno;
         $_SESSION["prijmeni"] = $param_prijmeni;
-
 
         $stmt->execute();
         $ulozeno = 1;

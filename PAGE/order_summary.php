@@ -2,7 +2,7 @@
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-//zdroj: stackoverflow (následující dvě funkce)
+//Nasledujici kod jsem nepsal - bude predelany
 function getBy($att, $value, $array)
 {
     foreach ($array as $key => $val) {
@@ -15,18 +15,18 @@ function getBy($att, $value, $array)
 
 function createCatalog($pdo)
 {
-    $arr[][] = NULL;
+    $pole[][] = NULL;
     $i = 0;
     $sql = "SELECT * FROM produkty";
     $stmt = $pdo->query($sql);
-    while ($row = $stmt->fetch()) {
-        $arr[$i]["ID"] = $row["ID"];
-        $arr[$i]["obrazek"] = $row["obrazek"];
-        $arr[$i]["popis"] = $row["popis"];
-        $arr[$i]["cena"] = $row["cena"];
+    while ($radek = $stmt->fetch()) {
+        $pole[$i]["ID"] = $radek["ID"];
+        $pole[$i]["obrazek"] = $radek["obrazek"];
+        $pole[$i]["popis"] = $radek["popis"];
+        $pole[$i]["cena"] = $radek["cena"];
         $i++;
     }
-    return $arr;
+    return $pole;
 }
 
 $catalog = createCatalog($conn);
