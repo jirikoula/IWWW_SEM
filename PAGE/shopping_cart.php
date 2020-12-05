@@ -3,7 +3,7 @@ include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$totalPrice = 0;
+$_SESSION["celkova_cena"] = 0;
 
 ?>
 <section class="sekce_kosik">
@@ -25,7 +25,7 @@ $totalPrice = 0;
         foreach ($_SESSION["cart"] as $key => $value) { //Pro každou položku v košíku -->
             $stmt = selectAllFromProduktyBind($key);
             $catalog = $stmt->fetch();
-            $totalPrice = $totalPrice + ($value["quantity"] * $catalog["cena"]);
+            $_SESSION["celkova_cena"] = $_SESSION["celkova_cena"] + ($value["quantity"] * $catalog["cena"]);
             ?>
             <div class="kosik_polozka">
                 <p></p>
@@ -51,7 +51,7 @@ $totalPrice = 0;
     }
     ?>
     <div>
-        <h3 id="h3_cena"> Celková cena: <?php echo $totalPrice ?> Kč</h3>
+        <h3 id="h3_cena"> Celková cena: <?php echo $_SESSION["celkova_cena"] ?> Kč</h3>
     </div>
     <?php
     if (isset($_SESSION["isLogged"]) == true) {

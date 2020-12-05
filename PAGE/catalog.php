@@ -3,7 +3,7 @@ include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$catalog = array();
+$catalog = "";
 $stmt = selectAllFromProdukty();
 
 if ($stmt->rowCount() >= 1) {

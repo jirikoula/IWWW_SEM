@@ -127,3 +127,12 @@ function updateUzivatele() {
 
     return $stmt;
 }
+
+function selectFromDoprava() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT nazev, cena FROM doprava");
+    $stmt->execute();
+
+    return $stmt;
+}
