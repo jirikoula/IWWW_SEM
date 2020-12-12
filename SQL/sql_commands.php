@@ -90,6 +90,34 @@ function insertIntoFormular() {
     return $stmt;
 }
 
+function insertIntoAdresa() {
+    $conn = connectToDatabase();
+
+    $jmeno = $_POST["jmeno"];
+    $prijmeni = $_POST["prijmeni"];
+    $email = $_POST["email"];
+    $telefon = $_POST["telefon"];
+    $ulice = $_POST["ulice"];
+    $cislo_popisne = $_POST["cislo_popisne"];
+    $mesto = $_POST["mesto"];
+
+    $stmt = $conn->prepare("INSERT INTO adresa (jmeno, prijmeni, email, telefon, ulice, cislo_popisne, mesto) VALUES (:jmeno, :prijmeni, :email, :telefon, :ulice, :cislo_popisne, :mesto)");
+
+    $stmt->bindParam(':jmeno', $jmeno);
+    $stmt->bindParam(':prijmeni', $prijmeni);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':telefon', $telefon);
+    $stmt->bindParam(':ulice', $ulice);
+    $stmt->bindParam(':cislo_popisne', $cislo_popisne);
+    $stmt->bindParam(':mesto', $mesto);
+
+    $stmt->execute();
+
+    $_SESSION["id_adresa"] = $conn->lastInsertId();
+
+    return $stmt;
+}
+
 function selectFromUzivatele() {
     $conn = connectToDatabase();
 
@@ -131,8 +159,42 @@ function updateUzivatele() {
 function selectFromDoprava() {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare("SELECT nazev, cena FROM doprava");
+    $stmt = $conn->prepare("SELECT id_doprava, nazev, cena FROM doprava");
     $stmt->execute();
 
     return $stmt;
+}
+
+function transactionCatalog() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare('INSERT INTO objednavky(id_uzivatel, id_doprava, id_adresa) VALUES(?, ?, ?)');
+    $stmt->bindParam(1, $_SESSION["id"]);
+    $stmt->bindParam(2, $_SESSION["id_doprava"]);
+    $stmt->bindParam(3, $_SESSION["id_adresa"]);
+    $stmt->execute();
+    $stmt = $conn->prepare("SELECT id FROM objednavky ORDER BY id DESC LIMIT 1");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function getPrice($id_doprava) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT cena FROM doprava WHERE id_doprava = $id_doprava");
+    $stmt->execute();
+    $price = $stmt->fetch();
+    $cena = $price['cena'];
+    return $cena;
+}
+
+function getName($id_doprava) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT nazev FROM doprava WHERE id_doprava = $id_doprava");
+    $stmt->execute();
+    $name = $stmt->fetch();
+    $nazev = $name['nazev'];
+    return $nazev;
 }

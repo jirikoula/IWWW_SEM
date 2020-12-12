@@ -22,7 +22,7 @@ $radek = $stmt->fetchAll();
         foreach($radek as $value) {
             ?>
             <label class="label_radio"> <?php echo $value["nazev"] ?> (+<?php echo $value["cena"] ?> Kč)
-                <input type="radio" name="radio" value=<?php echo $value["cena"] ?>>
+                <input type="radio" name="radio" value=<?php echo $value["id_doprava"] ?>>
                 <span class="doprava_radiobutton"></span>
             </label>
             <?php
@@ -36,9 +36,13 @@ $radek = $stmt->fetchAll();
 <?php
 if (isset($_POST['submit'])) {
     if (!empty($_POST['radio'])) {
-        $cena_za_dopravu = $_POST["radio"];
+        $id_doprava = $_POST["radio"];
+        $cena_za_dopravu = getPrice($id_doprava);
+        $_SESSION["nazev_doprava"] = getName($id_doprava);
+        $_SESSION["id_doprava"] = $id_doprava;
     }
 }
+
 ?>
 <section>
     <div>
@@ -57,5 +61,6 @@ if (isset($_POST['submit'])) {
         </div>
         <?php
     }
+    $_SESSION["celkova_cena_vypis"] = $_SESSION["celkova_cena"] + $cena_za_dopravu;
     ?>
 </section>

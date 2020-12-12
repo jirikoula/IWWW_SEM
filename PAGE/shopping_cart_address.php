@@ -7,7 +7,6 @@
         <h2 id="h2_kosik_vybrano">Dodací údaje</h2>
     </div>
 </section>
-
 <section class="formular_sekce">
     <form action="index.php?page=order_summary" method="post">
 
@@ -33,7 +32,7 @@
         </div>
         <div class="radek_formular">
             <label class="label_formular">Číslo popisné: </label>
-            <input name="c.popisne" type="text" required>
+            <input name="cislo_popisne" type="text" required>
         </div>
         <div class="radek_formular">
             <label class="label_formular">Město: </label>

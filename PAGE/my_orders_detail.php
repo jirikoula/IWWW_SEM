@@ -29,7 +29,7 @@ $conn = connectToDatabase();
         }
     }
     ?>
-    <p><div class="odstavec_detail">Celková cena objednávky: </div><?php echo $celkova_cena;?> Kč</p>
+    <p><div class="odstavec_detail">Celková cena objednávky bez dopravy: </div><?php echo $celkova_cena;?> Kč</p>
     <div class="radek_formular">
         <a class="tlacitko_univerzalni" href="index.php?page=my_orders">Zpět na moje objednávky</a>
     </div>
