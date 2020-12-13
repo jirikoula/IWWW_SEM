@@ -22,6 +22,15 @@ if ($stmt->rowCount() >= 1) {
                 </div>
             </div>
             <div class="katalog_popis">
+                <b><?php echo $item["nazev"]; ?></b>
+            </div>
+            <div class="katalog_popis">
+                <b>Rok vydání: </b><?php echo $item["rok_vydani"]; ?>
+            </div>
+            <div class="katalog_popis">
+                <b>Délka: </b><?php echo $item["delka"]; ?> min
+            </div>
+            <div class="katalog_popis">
                 <?php echo $item["popis"]; ?>
                 <h4 class="katalog_cena"><?php echo $item["cena"]; ?> Kč</h4>
             </div>

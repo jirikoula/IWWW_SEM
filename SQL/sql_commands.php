@@ -46,6 +46,15 @@ function selectAllFromProdukty() {
     return $stmt;
 }
 
+function selectAllFromProduktyWhereNevydano() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE cena = 0");
+    $stmt->execute();
+
+    return $stmt;
+}
+
 function selectAllFromProduktyBind($key) {
     $conn = connectToDatabase();
 
