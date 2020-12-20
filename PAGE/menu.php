@@ -5,7 +5,7 @@
     <label for="hamburger">&#9776;</label>
     <input type="checkbox" id="hamburger"/>
     <nav id="nav">
-        <a href="index.php?page=movies&action=add&id=">FILMY</a>
+        <a href="index.php?page=catalog&action=add&id=">FILMY</a>
         <a href="index.php?page=george_club">GEORGE CLUB</a>
         <a href="index.php?page=kontakt_formular">KONTAKT</a>
     </nav>

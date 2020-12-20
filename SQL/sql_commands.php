@@ -213,6 +213,7 @@ function getPrice($id_doprava) {
     $stmt->execute();
     $price = $stmt->fetch();
     $cena = $price['cena'];
+
     return $cena;
 }
 
@@ -223,5 +224,57 @@ function getName($id_doprava) {
     $stmt->execute();
     $name = $stmt->fetch();
     $nazev = $name['nazev'];
+
     return $nazev;
+}
+
+function selectAllFromUzivatele($uzivatelske_jmeno_u) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM uzivatele WHERE uzivatelske_jmeno = :uzivatelske_jmeno");
+    $stmt->bindParam(':uzivatelske_jmeno', $uzivatelske_jmeno_u);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectIdFromUzivateleWhereName() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id FROM uzivatele WHERE uzivatelske_jmeno = :uzivatelske_jmeno");
+    $stmt->bindParam(":uzivatelske_jmeno", $param_userName, PDO::PARAM_STR);
+    $param_userName = trim($_POST["uzivatelske_jmeno"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectIdFromUzivateleWhereEmail() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id FROM uzivatele WHERE email = :email");
+    $stmt->bindParam(":email", $param_email, PDO::PARAM_STR);
+    $param_email = trim($_POST["email"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function insertIntoUzivatele() {
+    $conn = connectToDatabase();
+
+    $userName = $_POST["uzivatelske_jmeno"];
+    $email = $_POST["email"];
+    $password = $_POST["heslo"];
+    $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+    $role = $_POST["role"] = 1;
+    $stmt = $conn->prepare("INSERT INTO uzivatele (uzivatelske_jmeno, email, heslo, role) VALUES (:uzivatelske_jmeno, :email, :heslo, :role)");
+
+    $stmt->bindParam(':uzivatelske_jmeno', $userName);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':heslo', $hashPassword);
+    $stmt->bindParam(':role', $role);
+
+    $stmt->execute();
+    return $stmt;
 }

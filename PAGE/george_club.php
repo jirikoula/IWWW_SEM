@@ -29,8 +29,8 @@
     </div>
 </div>
 <div class="radek_formular">
-    <a id=odkaz_registrace href="../PAGE/register.php">STÁT SE ČLENEM</a>
+    <a id=odkaz_registrace href="index.php?page=register">STÁT SE ČLENEM</a>
 </div>
 <div class="radek_formular">
-    <a id=odkaz_registrace href="../PAGE/login.php">JIŽ JSEM ČLENEM</a>
+    <a id=odkaz_registrace href="index.php?page=login">JIŽ JSEM ČLENEM</a>
 </div>

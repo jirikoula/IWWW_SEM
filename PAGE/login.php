@@ -24,9 +24,7 @@ if($_POST){
     if (count($validation) == 1) {
         if (empty($uzivatelske_jmeno_u) == false) {
             if (empty($heslo_u) == false) {
-                $stmt = $conn->prepare("SELECT role, uzivatelske_jmeno, heslo, email, jmeno, prijmeni, id FROM uzivatele WHERE uzivatelske_jmeno = :uzivatelske_jmeno");
-                $stmt->bindParam(':uzivatelske_jmeno', $uzivatelske_jmeno_u);
-                $stmt->execute();
+                $stmt = selectAllFromUzivatele($uzivatelske_jmeno_u);
                 if ($stmt->rowCount() != 0) {
                     $radek = $stmt->fetch();
                     $uzivatel = $radek["uzivatelske_jmeno"];
@@ -81,14 +79,14 @@ if($_POST){
 <?php
 if (count($validation) != 1) {
     if (empty($_POST["uzivatelske_jmeno"])) {
-        echo "<div style ='font-size:20px; color:red; text-align: center;'> CHYBA: Musíte vyplnit uživatelské jméno!</div>";
+        echo "<div class='chyba'> CHYBA: Musíte vyplnit uživatelské jméno!</div>";
     }
     if (empty($_POST["heslo"])) {
-        echo "<div style ='font-size:20px; color:red; text-align: center;'> CHYBA: Musíte vyplnit heslo!</div>";
+        echo "<div class='chyba'> CHYBA: Musíte vyplnit heslo!</div>";
     }
 }
 
 if ($spatne_jmeno_heslo == 1) {
-    echo "<div style ='font-size:20px; color:darkorange; text-align: center;'> Kombinace uživatelského jména a hesla je špatná! </div>";
+    echo "<div class='upozorneni'> Kombinace uživatelského jména a hesla je špatná! </div>";
 }
 ?>

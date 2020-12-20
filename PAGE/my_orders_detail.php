@@ -9,6 +9,7 @@ $conn = connectToDatabase();
 <section class="formular_sekce">
     <?php
     $celkova_cena = 0;
+    $cena_dopravy = 0;
 
     if(isset($_GET["id"])) {
         $id_objednavky = $_GET["id"];
@@ -31,13 +32,13 @@ $conn = connectToDatabase();
         <?php
         $cena_dopravy = $radek_doprava["cena"];
 
-        $stmt_2 = selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
+        $stmt = selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
 
-        while($radek = $stmt_2->fetch()) {
+        while($radek = $stmt->fetch()) {
             $id_produkt = $radek["id_produkt"];
-            $stmt_3 = selectNazevFromProduktyWhereIDEqualsId($id_produkt);
+            $nazev = selectNazevFromProduktyWhereIDEqualsId($id_produkt);
             ?>
-            <p><div class="odstavec_detail">Název produktu: </div><?php echo $stmt_3["nazev"];?></p>
+            <p><div class="odstavec_detail">Název produktu: </div><?php echo $nazev["nazev"];?></p>
             <p><div class="odstavec_detail">Počet kusů: </div><?php echo $radek["pocet_kusu"];?></p>
             <p><div class="odstavec_detail">Cena za kus: </div><?php echo $radek["cena_za_kus"];?> Kč</p>
             <hr>

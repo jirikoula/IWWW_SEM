@@ -175,6 +175,19 @@ h2 {
     height: 18px;
 }
 
+/* [REGISTRACE/PRIHLASENI] */
+.chyba {
+    font-size: 20px;
+    color: red;
+    text-align: center;
+}
+
+.upozorneni {
+    font-size: 20px;
+    color: darkorange;
+    text-align: center;
+}
+
 /* [CATALOG] */
 
 .sekce_katalog {

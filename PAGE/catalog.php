@@ -10,6 +10,9 @@ if ($stmt->rowCount() >= 1) {
     $catalog = $stmt->fetchAll();
 }
 ?>
+<h2 id="h2_black">Nabídka filmů</h2>
+
+<p>TODO: Kategorie, filtrování</p>
 
 <section class="sekce_katalog">
     <?php
@@ -17,8 +20,8 @@ if ($stmt->rowCount() >= 1) {
         ?>
         <article class="sekce_katalog_article">
             <div>
-                <div>
-                    <img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>" class="katalog_obrazek">
+                <a>
+                    <a href="index.php?page=catalog_detail&id=<?php $item["ID"];?>"><img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>" class="katalog_obrazek"></a>
                 </div>
             </div>
             <div class="katalog_popis">
@@ -34,7 +37,7 @@ if ($stmt->rowCount() >= 1) {
                 <?php echo $item["popis"]; ?>
                 <h4 class="katalog_cena"><?php echo $item["cena"]; ?> Kč</h4>
             </div>
-            <a href="index.php?page=movies&action=add&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
+            <a href="index.php?page=catalog&action=add&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
         </article>
         <?php
     }
