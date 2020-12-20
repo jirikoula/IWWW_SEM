@@ -54,10 +54,16 @@ $_SESSION["celkova_cena"] = 0;
         <h3 id="h3_cena"> Celková cena: <?php echo $_SESSION["celkova_cena"] ?> Kč</h3>
     </div>
     <?php
-    if (isset($_SESSION["isLogged"]) == true) {
+    if (isset($_SESSION["isLogged"]) == true && $_SESSION["celkova_cena"] != 0) {
         ?>
         <div class="radek_formular">
             <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Pokračovat</a>
+        </div>
+        <?php
+    } else if ($_SESSION["celkova_cena"] == 0) {
+        ?>
+        <div class="radek_formular">
+            <a id=odkaz_kosik href="index.php?page=catalog">KOŠÍK JE PRÁZDNÝ</a>
         </div>
         <?php
     } else {
@@ -66,6 +72,7 @@ $_SESSION["celkova_cena"] = 0;
             <a id=odkaz_kosik href="index.php?page=login">PRO POKRAČOVÁNÍ SE MUSÍTE PŘIHLÁSIT!</a>
         </div>
         <?php
+
     }
     ?>
 </section>

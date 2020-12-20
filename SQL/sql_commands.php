@@ -18,10 +18,19 @@ function selectAllFromObjednavkyWhereIdEqualsId($id_objednavky) {
     return $stmt;
 }
 
-function selectAllFromDopravaWhereIdEqualsId($test) {
+function selectAllFromDopravaWhereIdEqualsId($id_dopravy) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare("SELECT * FROM doprava WHERE id_doprava = " . $test);
+    $stmt = $conn->prepare("SELECT * FROM doprava WHERE id_doprava = " . $id_dopravy);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromObjednavkyStavWhereIdEqualsId($id_stav) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM objednavky_stav WHERE id = " . $id_stav);
     $stmt->execute();
 
     return $stmt;

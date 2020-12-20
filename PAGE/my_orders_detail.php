@@ -16,15 +16,20 @@ $conn = connectToDatabase();
         $stmt = selectAllFromObjednavkyWhereIdEqualsId($id_objednavky);
         $radek = $stmt->fetch();
         $id_dopravy = $radek["id_doprava"];
+        $id_stav = $radek["id_stav"];
 
         $stmt_nazev_dopravy = selectAllFromDopravaWhereIdEqualsId($id_dopravy);
-        $radek_cena_dopravy = $stmt_nazev_dopravy->fetch();
+        $radek_doprava = $stmt_nazev_dopravy->fetch();
+
+        $stmt_nazev_stavu = selectAllFromObjednavkyStavWhereIdEqualsId($id_stav);
+        $radek_nazev_stavu = $stmt_nazev_stavu->fetch();
         ?>
-        <p><div class="odstavec_detail">Název dopravy: </div><?php echo $radek_cena_dopravy["nazev"];?></p>
-        <p><div class="odstavec_detail">Cena dopravy: </div><?php echo $radek_cena_dopravy["cena"];?> Kč</p>
+        <p><div class="odstavec_detail">Stav objednávky: </div><?php echo $radek_nazev_stavu["nazev"];?></p>
+        <p><div class="odstavec_detail">Název dopravy: </div><?php echo $radek_doprava["nazev"];?></p>
+        <p><div class="odstavec_detail">Cena dopravy: </div><?php echo $radek_doprava["cena"];?> Kč</p>
         <hr>
         <?php
-        $cena_dopravy = $radek_cena_dopravy["cena"];
+        $cena_dopravy = $radek_doprava["cena"];
 
         $stmt_2 = selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
 
