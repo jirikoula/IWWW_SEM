@@ -14,6 +14,18 @@ $conn = connectToDatabase();
         $id_objednavky = $_GET["id"];
 
         $stmt = selectAllFromObjednavkyWhereIdEqualsId($id_objednavky);
+        $radek = $stmt->fetch();
+        $id_dopravy = $radek["id_doprava"];
+
+        $stmt_nazev_dopravy = selectAllFromDopravaWhereIdEqualsId($id_dopravy);
+        $radek_cena_dopravy = $stmt_nazev_dopravy->fetch();
+        ?>
+        <p><div class="odstavec_detail">Název dopravy: </div><?php echo $radek_cena_dopravy["nazev"];?></p>
+        <p><div class="odstavec_detail">Cena dopravy: </div><?php echo $radek_cena_dopravy["cena"];?> Kč</p>
+        <hr>
+        <?php
+        $cena_dopravy = $radek_cena_dopravy["cena"];
+
         $stmt_2 = selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
 
         while($radek = $stmt_2->fetch()) {
@@ -28,8 +40,9 @@ $conn = connectToDatabase();
             $celkova_cena = $celkova_cena + $radek["pocet_kusu"] * $radek["cena_za_kus"];
         }
     }
+    $celkova_cena = $celkova_cena + $cena_dopravy;
     ?>
-    <p><div class="odstavec_detail">Celková cena objednávky bez dopravy: </div><?php echo $celkova_cena;?> Kč</p>
+    <p><div class="odstavec_detail">Celková cena objednávky: </div><?php echo $celkova_cena;?> Kč</p>
     <div class="radek_formular">
         <a class="tlacitko_univerzalni" href="index.php?page=my_orders">Zpět na moje objednávky</a>
     </div>

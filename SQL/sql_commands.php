@@ -18,6 +18,15 @@ function selectAllFromObjednavkyWhereIdEqualsId($id_objednavky) {
     return $stmt;
 }
 
+function selectAllFromDopravaWhereIdEqualsId($test) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM doprava WHERE id_doprava = " . $test);
+    $stmt->execute();
+
+    return $stmt;
+}
+
 function selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky) {
     $conn = connectToDatabase();
 
@@ -49,7 +58,7 @@ function selectAllFromProdukty() {
 function selectAllFromProduktyWhereNevydano() {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE cena = 0");
+    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE delka = 0");
     $stmt->execute();
 
     return $stmt;
