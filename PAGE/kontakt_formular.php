@@ -14,7 +14,9 @@ if($_POST) {
 <section class="formular_sekce">
     <?php
     if ($formularOdeslan == 1) {
-        echo "<div style ='font-size:20px; color:darkorange; text-align: center;'> Formulář byl úspěšné odeslán!</div>";
+        ?>
+        <div class="upozorneni"> Formulář byl úspěšné odeslán!</div>
+        <?php
     }
     ?>
     <h2 id="h2_form">NAPIŠTE NÁM</h2>

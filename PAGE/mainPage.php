@@ -25,7 +25,7 @@ if ($stmt->rowCount() >= 1) {
             <?php
             foreach ($catalog as $item) {
                 ?>
-                <img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>"">
+                <a href="index.php?page=catalog"><img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>""></a>
                 <?php
             }
             ?>

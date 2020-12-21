@@ -18,7 +18,7 @@ if($_SESSION["role"] == 1) {
     </section>
     <?php
 } else {
-    //zdroj: w3school, editováno
+    //zdroj: w3school https://www.w3schools.com/php/php_mysql_select.asp, editováno
     ?>
     <section class="formular_sekce_admin">
         <h2 id="h2_form">UŽIVATELÉ</h2>

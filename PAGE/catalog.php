@@ -20,9 +20,7 @@ if ($stmt->rowCount() >= 1) {
         ?>
         <article class="sekce_katalog_article">
             <div>
-                <a>
-                    <a href="index.php?page=catalog_detail&id=<?php $item["ID"];?>"><img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>" class="katalog_obrazek"></a>
-                </div>
+                <a href="index.php?page=catalog_detail&id=<?php echo $item["ID"];?>"><img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>" class="katalog_obrazek"></a>
             </div>
             <div class="katalog_popis">
                 <b><?php echo $item["nazev"]; ?></b>

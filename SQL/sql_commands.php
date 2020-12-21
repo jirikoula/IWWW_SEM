@@ -148,7 +148,7 @@ function insertIntoAdresa() {
 function selectFromUzivatele() {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare("SELECT uzivatelske_jmeno, email, jmeno, prijmeni FROM uzivatele WHERE id = :id");
+    $stmt = $conn->prepare("SELECT uzivatelske_jmeno, email, jmeno, prijmeni, role FROM uzivatele WHERE id = :id");
     $stmt->bindParam(':id', $_GET["id"]);
     $stmt->execute();
 
@@ -162,20 +162,23 @@ function updateUzivatele() {
     $email_novy = $_POST["email"];
     $jmeno_nove = $_POST["jmeno"];
     $prijmeni_nove = $_POST["prijmeni"];
+    $role_nova = $_POST["role"];
 
     echo $email_novy;
     echo $uzivatelske_jmeno_nove;
     echo $jmeno_nove;
     echo $prijmeni_nove;
+    echo $role_nova;
     echo $_SESSION["edit_id"];
 
-    $stmt = $conn->prepare("UPDATE uzivatele SET uzivatelske_jmeno = :uzivatelske_jmeno, email = :email, jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id");
+    $stmt = $conn->prepare("UPDATE uzivatele SET uzivatelske_jmeno = :uzivatelske_jmeno, email = :email, jmeno = :jmeno, prijmeni = :prijmeni, role = :role WHERE id = :id");
 
     $stmt->bindParam(':id', $_SESSION["edit_id"]);
     $stmt->bindParam(':uzivatelske_jmeno', $uzivatelske_jmeno_nove);
     $stmt->bindParam(':email', $email_novy);
     $stmt->bindParam(':jmeno', $jmeno_nove);
     $stmt->bindParam(':prijmeni', $prijmeni_nove);
+    $stmt->bindParam(':role', $role_nova);
     $stmt->execute();
 
     header("Location: index.php?page=account");
@@ -200,10 +203,9 @@ function transactionCatalog() {
     $stmt->bindParam(2, $_SESSION["id_doprava"]);
     $stmt->bindParam(3, $_SESSION["id_adresa"]);
     $stmt->execute();
-    $stmt = $conn->prepare("SELECT id FROM objednavky ORDER BY id DESC LIMIT 1");
-    $stmt->execute();
+    $orderId = $conn->lastInsertId();
 
-    return $stmt;
+    return $orderId;
 }
 
 function getPrice($id_doprava) {
@@ -277,4 +279,67 @@ function insertIntoUzivatele() {
 
     $stmt->execute();
     return $stmt;
+}
+
+function selectFromAdresa() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT jmeno, prijmeni, email, telefon, ulice, cislo_popisne, mesto FROM adresa WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION["id_adresa"]);
+    $stmt->execute();
+
+    if ($stmt->rowCount() != 0) {
+        $radek = $stmt->fetch();
+        $jmeno = $radek["jmeno"];
+        $prijmeni = $radek["prijmeni"];
+        $email = $radek["email"];
+        $telefon = $radek["telefon"];
+        $ulice = $radek["ulice"];
+        $cislo_popisne = $radek["cislo_popisne"];
+        $mesto = $radek["mesto"];
+    }
+    $_SESSION["jmeno"] = $jmeno;
+    $_SESSION["prijmeni"] = $prijmeni;
+    $_SESSION["email"] = $email;
+    $_SESSION["telefon"] = $telefon;
+    $_SESSION["ulice"] = $ulice;
+    $_SESSION["cislo_popisne"] = $cislo_popisne;
+    $_SESSION["mesto"] = $mesto;
+
+    return $stmt;
+}
+
+function getSpecificItem($item_id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT ID, obrazek, popis, cena FROM produkty WHERE ID = :ID");
+    $stmt->bindParam(':ID', $item_id);
+    $stmt->execute();
+    $radek = $stmt->fetch();
+
+    return $radek;
+}
+
+function getBy($id_produkt, $value, $array) { //Shoduje se ID v košíku?, PŘEDĚLAT
+    foreach ($array as $key => $hodnota) {
+        if ($hodnota[$id_produkt] == $value) {
+            return $key;
+        }
+    }
+}
+
+function getItemsOfCart() { //$key = id, $value = pocet, PREDĚLAT NA PŘÍKAZ Z DATABÁZE
+    $i = 0;
+    $pole[][] = NULL;
+
+    foreach ($_SESSION["cart"] as $key => $value) {
+        $radek = getSpecificItem($key);
+
+        $pole[$i]["ID"] = $radek["ID"];
+        $pole[$i]["obrazek"] = $radek["obrazek"];
+        $pole[$i]["popis"] = $radek["popis"];
+        $pole[$i]["cena"] = $radek["cena"];
+        $i++;
+    }
+    return $pole;
 }

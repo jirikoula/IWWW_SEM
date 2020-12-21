@@ -72,7 +72,6 @@ $_SESSION["celkova_cena"] = 0;
             <a id=odkaz_kosik href="index.php?page=login">PRO POKRAČOVÁNÍ SE MUSÍTE PŘIHLÁSIT!</a>
         </div>
         <?php
-
     }
     ?>
 </section>

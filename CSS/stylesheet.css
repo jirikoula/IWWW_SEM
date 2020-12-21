@@ -204,8 +204,26 @@ h2 {
     background-color: white;
 }
 
+.sekce_katalog_detail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sekce_katalog_detail_article {
+    width: 80%;
+    margin: 1%;
+    padding-bottom: 15px;
+    border: 1px solid black;
+    background-color: white;
+}
+
 .katalog_cena {
     padding-left: 80%;
+    color: black;
+}
+
+.katalog_cena_detail {
     color: black;
 }
 
@@ -213,6 +231,27 @@ h2 {
     color: black;
     padding-left: 5%;
     padding-top: 2%;
+}
+
+.katalog_popis_detail_obrazek {
+    color: black;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-right: 6%;
+    float: left;
+}
+
+.katalog_popis_detail {
+    color: black;
+    padding-left: 25%;
+    padding-top: 2%;
+    padding-right: 2%;
+}
+
+.katalog_popis_detail_video {
+    color: black;
+    padding-left: 5%;
+    padding-top: 10%;
 }
 
 .katalog_tlacitko {
@@ -228,10 +267,29 @@ h2 {
     margin-bottom: 40%;
 }
 
+.katalog_tlacitko_detail {
+    color: black;
+    font-size: 100%;
+    text-decoration: none;
+    padding: 10px 30px;
+    background-color: darkorange;
+    text-align: center;
+    font-family: Arial;
+    font-weight: bold;
+    margin-bottom: 40%;
+}
+
 .katalog_obrazek {
     height: 250px;
     margin-top: 3%;
     margin-left: 27%;
+}
+
+.katalog_obrazek_detail {
+    max-height: 300px;
+    height: 30%;
+    margin-top: 3%;
+    margin-left: 7%;
 }
 
 /* [ACCOUNT] */

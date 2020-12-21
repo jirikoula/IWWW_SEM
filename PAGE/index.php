@@ -11,9 +11,7 @@ include "html_head.php";
 
 <?php
 include "menu.php";
-?>
 
-<?php
 $pathToFile = null;
 if(!empty($_GET["page"])){
     $pathToFile = $_GET["page"] . ".php";
@@ -23,12 +21,8 @@ if (file_exists($pathToFile)) {
 } else {
     include "mainPage.php";
 }
-?>
 
-
-<?php
 include "footer.php";
 ?>
-
 </body>
 </html>

@@ -4,16 +4,14 @@ session_start();
 include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
-$validation[] = NULL;
 ?>
 <!DOCTYPE html>
 <html lang="cs">
 <?php
 include "html_head.php";
 ?>
-<body>
+<body class ="body_index_form">
 <?php
-
 include "menu.php";
 
 try {
@@ -25,12 +23,12 @@ try {
         $email = $radek["email"];
         $jmeno = $radek["jmeno"];
         $prijmeni = $radek["prijmeni"];
+        $role = $radek["role"];
         $_SESSION["edit_id"] = $_GET["id"];
     }
 } catch (PDOException $e) {
     echo "CHYBA";
 }
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
@@ -41,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <section class="formular_sekce">
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <form action="/IWWW_SEM/PAGE/editUser.php" method="post">
         <div class="radek_formular">
             <label class="label_formular">Uživ. jméno: </label>
             <input name="uzivatelske_jmeno" type="text" value="<?php echo $uzivatelske_jmeno; ?>">
@@ -57,6 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="radek_formular">
             <label class="label_formular">Příjmení: </label>
             <input name="prijmeni" type="text" value="<?php echo $prijmeni; ?>">
+        </div>
+        <div class="radek_formular">
+            <label class="label_formular">Role: </label>
+            <input name="role" type="text" value="<?php echo $role; ?>">
         </div>
         <div class="radek_formular">
             <input id="submit" type="submit" value="Uložit">

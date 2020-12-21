@@ -4,95 +4,26 @@ include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 if($_POST) {
-    $stmt = insertIntoAdresa();
+    insertIntoAdresa();
 }
 
-function getBy($att, $value, $array) //Shoduje se ID v košíku?
-{
-    foreach ($array as $key => $val) {
-        if ($val[$att] == $value) {
-            return $key;
-        }
-    }
-    return null;
-}
-
-function getSpecificItem($item_id, $conn) { //Najdi, kde se shoduje ID
-    $sql = "SELECT ID, obrazek, popis, cena FROM produkty WHERE ID = :ID";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':ID', $item_id);
-    $stmt->execute();
-    $radek = $stmt->fetch();
-
-    return $radek;
-}
-
-function getItemsOfCart($conn) { //$key = id, $value = pocet,
-    $i = 0;
-    $pole[][] = NULL;
-
-    foreach ($_SESSION["cart"] as $key => $value) {
-        $radek = getSpecificItem($key, $conn);
-
-        $pole[$i]["ID"] = $radek["ID"];
-        $pole[$i]["obrazek"] = $radek["obrazek"];
-        $pole[$i]["popis"] = $radek["popis"];
-        $pole[$i]["cena"] = $radek["cena"];
-        $i++;
-
-    }
-    return $pole;
-}
-
-$catalog = getItemsOfCart($conn);
+$catalog = getItemsOfCart();
 
 if (isset($_POST["order"])) {
-    $stmt = transactionCatalog();
-    $orderId = $stmt->fetch()[0];
+    $orderId = transactionCatalog();
     foreach ($_SESSION["cart"] as $key => $value) {
         $item = $catalog[getBy("ID", $key, $catalog)];
-        $sql = 'INSERT INTO objednavka_polozky(id_objednavka, id_produkt, pocet_kusu, cena_za_kus) VALUES(' . $orderId . ', ' . $item["ID"] . ', ' . $value["quantity"] . ',' . $item["cena"] . ')';
-        $conn->query($sql);
+        $conn->query('INSERT INTO objednavka_polozky(id_objednavka, id_produkt, pocet_kusu, cena_za_kus) VALUES(' . $orderId . ', ' . $item["ID"] . ', ' . $value["quantity"] . ',' . $item["cena"] . ')');
     }
     unset($_SESSION["cart"]);
 }
+
+selectFromAdresa();
 ?>
 <div id="kosik_nadpis">
     <h2 id="h2_kosik">Rekapitulace objednávky</h2>
 </div>
 <section class="formular_sekce">
-    <?php
-    //Vypis položek objednávky, dopravy, ceny, ...
-    function selectFromAdresa() {
-        $conn = connectToDatabase();
-
-        $stmt = $conn->prepare("SELECT jmeno, prijmeni, email, telefon, ulice, cislo_popisne, mesto FROM adresa WHERE id = :id");
-        $stmt->bindParam(':id', $_SESSION["id_adresa"]);
-        $stmt->execute();
-
-        if ($stmt->rowCount() != 0) {
-            $radek = $stmt->fetch();
-            $jmeno = $radek["jmeno"];
-            $prijmeni = $radek["prijmeni"];
-            $email = $radek["email"];
-            $telefon = $radek["telefon"];
-            $ulice = $radek["ulice"];
-            $cislo_popisne = $radek["cislo_popisne"];
-            $mesto = $radek["mesto"];
-        }
-        $_SESSION["jmeno"] = $jmeno;
-        $_SESSION["prijmeni"] = $prijmeni;
-        $_SESSION["email"] = $email;
-        $_SESSION["telefon"] = $telefon;
-        $_SESSION["ulice"] = $ulice;
-        $_SESSION["cislo_popisne"] = $cislo_popisne;
-        $_SESSION["mesto"] = $mesto;
-
-        return $stmt;
-    }
-    $stmt = selectFromAdresa();
-
-    ?>
     <h2 id="h2_form">Doručovací údaje:</h2>
     <p><b>Jméno:</b> <?php echo $_SESSION["jmeno"]; ?></p>
     <p><b>Příjmení:</b> <?php echo $_SESSION["prijmeni"]; ?></p>
