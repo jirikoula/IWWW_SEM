@@ -65,3 +65,20 @@ function deleteFromCart($productId)
 
     header("Location: index.php?page=shopping_cart");
 }
+
+function administration_manager($action, $id)
+{
+    if($action == "delete") {
+        $stmt = deleteFromUzivateleWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
+    } else if($action == "create") {
+        header("location: index.php?page=createUser");
+    } else if($action == "edit") {
+        $_SESSION["edit_id"] = $id;
+        header("location: index.php?page=editUser");
+    }
+}
+
+

@@ -188,7 +188,7 @@ h2 {
     text-align: center;
 }
 
-/* [CATALOG] */
+/* [KATALOG] */
 
 .sekce_katalog {
     display: flex;
@@ -290,6 +290,22 @@ h2 {
     height: 30%;
     margin-top: 3%;
     margin-left: 7%;
+}
+
+.nadpis_katalog {
+    margin-left: 2%;
+}
+
+.input_katalog {
+    width: 30px;
+    height: 10px;
+    display: block;
+    font-size: 10px;
+    color: black;
+    text-shadow: 1px 0px 0px white;
+    font-weight: bold;
+    margin-top: 0.7%;
+    margin-left: 0.5%;
 }
 
 /* [ACCOUNT] */

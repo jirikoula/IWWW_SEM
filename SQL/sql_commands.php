@@ -64,6 +64,33 @@ function selectAllFromProdukty() {
     return $stmt;
 }
 
+function selectAllFromProduktyNejlevnejsi() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY cena");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyNejdrazsi() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY cena DESC");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyNejstarsi() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY id DESC");
+    $stmt->execute();
+
+    return $stmt;
+}
+
 function selectAllFromProduktyWhereNevydano() {
     $conn = connectToDatabase();
 
@@ -78,6 +105,26 @@ function selectAllFromProduktyBind($key) {
 
     $stmt = $conn->prepare(" SELECT * FROM produkty WHERE ID = :ID");
     $stmt->bindParam(':ID', $key);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyBindYear($rok_vydani) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani");
+    $stmt->bindParam(':rok_vydani', $rok_vydani);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyBindYearr($rok_vydani) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani");
+    $stmt->bindParam(':rok_vydani', $rok_vydani);
     $stmt->execute();
 
     return $stmt;
@@ -149,7 +196,7 @@ function selectFromUzivatele() {
     $conn = connectToDatabase();
 
     $stmt = $conn->prepare("SELECT uzivatelske_jmeno, email, jmeno, prijmeni, role FROM uzivatele WHERE id = :id");
-    $stmt->bindParam(':id', $_GET["id"]);
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
     $stmt->execute();
 
     return $stmt;
@@ -320,26 +367,23 @@ function getSpecificItem($item_id) {
     return $radek;
 }
 
-function getBy($id_produkt, $value, $array) { //Shoduje se ID v košíku?, PŘEDĚLAT
-    foreach ($array as $key => $hodnota) {
-        if ($hodnota[$id_produkt] == $value) {
-            return $key;
-        }
-    }
-}
-
-function getItemsOfCart() { //$key = id, $value = pocet, PREDĚLAT NA PŘÍKAZ Z DATABÁZE
-    $i = 0;
-    $pole[][] = NULL;
+function getItemsOfCart() { //$key = id, $value = pocet
 
     foreach ($_SESSION["cart"] as $key => $value) {
         $radek = getSpecificItem($key);
-
-        $pole[$i]["ID"] = $radek["ID"];
-        $pole[$i]["obrazek"] = $radek["obrazek"];
-        $pole[$i]["popis"] = $radek["popis"];
-        $pole[$i]["cena"] = $radek["cena"];
-        $i++;
+        $_SESSION["ID"] = $radek["ID"];
+        $_SESSION["obrazek"] = $radek["obrazek"];
+        $_SESSION["popis"] = $radek["popis"];
+        $_SESSION["cena"] = $radek["cena"];
     }
-    return $pole;
+    return $radek;
+}
+
+function deleteFromUzivateleWhereId($id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" DELETE FROM uzivatele WHERE id = $id");
+    $stmt->execute();
+
+    return $stmt;
 }

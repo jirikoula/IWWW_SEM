@@ -1,18 +1,7 @@
 <?php
-session_start();
-
 include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
-?>
-<!DOCTYPE html>
-<html lang="cs">
-<?php
-include "html_head.php";
-?>
-<body class ="body_index_form">
-<?php
-include "menu.php";
 
 try {
     $stmt = selectFromUzivatele();
@@ -24,7 +13,7 @@ try {
         $jmeno = $radek["jmeno"];
         $prijmeni = $radek["prijmeni"];
         $role = $radek["role"];
-        $_SESSION["edit_id"] = $_GET["id"];
+        $_SESSION["edit_id"];
     }
 } catch (PDOException $e) {
     echo "CHYBA";
@@ -38,8 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+<body class ="body_index_form">
 <section class="formular_sekce">
-    <form action="/IWWW_SEM/PAGE/editUser.php" method="post">
+    <form action="index.php?page=editUser" method="post">
         <div class="radek_formular">
             <label class="label_formular">Uživ. jméno: </label>
             <input name="uzivatelske_jmeno" type="text" value="<?php echo $uzivatelske_jmeno; ?>">
@@ -65,8 +55,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </form>
 </section>
-<?php
-include "footer.php";
-?>
-</body>
-</html>
+

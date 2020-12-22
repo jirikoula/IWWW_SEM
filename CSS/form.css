@@ -86,6 +86,21 @@ input, select, textarea {
     font-family: Arial
 }
 
+.tlacitko_univerzalni_katalog {
+    background-color: darkorange;
+    color: black;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 30px;
+    width: 120px;
+    font-family: Arial
+}
+
 .tlacitko_univerzalni_ucet {
     background-color: darkorange;
     color: black;
