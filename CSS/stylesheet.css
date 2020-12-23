@@ -281,6 +281,7 @@ h2 {
 
 .katalog_obrazek {
     height: 250px;
+    max-width: 170px;
     margin-top: 3%;
     margin-left: 27%;
 }

@@ -78,6 +78,26 @@ function administration_manager($action, $id)
     } else if($action == "edit") {
         $_SESSION["edit_id"] = $id;
         header("location: index.php?page=editUser");
+    } else if($action == "edit_produkty") {
+        $_SESSION["edit_id"] = $id;
+        header("location: index.php?page=editProdukty");
+    } else if($action == "create_produkty") {
+        header("location: index.php?page=createProdukty");
+    } else if($action == "delete_produkty") {
+        $stmt = deleteFromProduktyWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
+    } else if($action == "edit_doprava") {
+        $_SESSION["edit_id"] = $id;
+        header("location: index.php?page=editDoprava");
+    } else if($action == "create_doprava") {
+        header("location: index.php?page=createDoprava");
+    } else if($action == "delete_doprava") {
+        $stmt = deleteFromDopravaWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
     }
 }
 

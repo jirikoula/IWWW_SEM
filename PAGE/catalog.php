@@ -5,6 +5,16 @@ $conn = connectToDatabase();
 
 $catalog = "";
 
+if($_GET["filter"] != NULL) {
+    $_SESSION["filter"] = $_GET["filter"];
+}
+
+if($_GET["sort"] != NULL) {
+    $_SESSION["sort"] = $_GET["sort"];
+}
+
+echo $_SESSION["filter"];
+echo $_SESSION["sort"];
 if ($_GET["sort"] == "nejlevnejsi") {
     $stmt = selectAllFromProduktyNejlevnejsi();
 } else if ($_GET["sort"] == "nejdrazsi") {
@@ -65,7 +75,7 @@ if ($stmt->rowCount() >= 1) {
         ?>
         <article class="sekce_katalog_article">
             <div>
-                <a href="index.php?page=catalog_detail&id=<?php echo $item["ID"];?>"><img alt="fotka filmu" src="data:image/jpeg;base64,<?php echo base64_encode($item["obrazek"]) ?>" class="katalog_obrazek"></a>
+                <a href="index.php?page=catalog_detail&id=<?php echo $item["ID"];?>"><img src="../IMG/<?php echo $item["obrazek"] ?>" class="katalog_obrazek"></a>
             </div>
             <div class="katalog_popis">
                 <b><?php echo $item["nazev"]; ?></b>

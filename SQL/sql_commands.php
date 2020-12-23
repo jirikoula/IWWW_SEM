@@ -116,6 +116,9 @@ function selectAllFromProduktyBindYear($rok_vydani) {
     $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani");
     $stmt->bindParam(':rok_vydani', $rok_vydani);
     $stmt->execute();
+    if($_SESSION["sort"] == "nejlevnejsi") {
+        selectAllFromProduktyNejlevnejsi();
+    }
 
     return $stmt;
 }
@@ -367,16 +370,30 @@ function getSpecificItem($item_id) {
     return $radek;
 }
 
+function getBy($id, $klic, $kosik) //Shoduje se ID v košíku?
+{
+    foreach ($kosik as $key => $value) {
+        if ($value[$id] == $klic) {
+            return $key;
+        }
+    }
+}
+
 function getItemsOfCart() { //$key = id, $value = pocet
+    $i = 0;
+    $pole[][] = NULL;
 
     foreach ($_SESSION["cart"] as $key => $value) {
         $radek = getSpecificItem($key);
-        $_SESSION["ID"] = $radek["ID"];
-        $_SESSION["obrazek"] = $radek["obrazek"];
-        $_SESSION["popis"] = $radek["popis"];
-        $_SESSION["cena"] = $radek["cena"];
+
+        $pole[$i]["ID"] = $radek["ID"];
+        $pole[$i]["obrazek"] = $radek["obrazek"];
+        $pole[$i]["popis"] = $radek["popis"];
+        $pole[$i]["cena"] = $radek["cena"];
+        $i++;
+
     }
-    return $radek;
+    return $pole;
 }
 
 function deleteFromUzivateleWhereId($id) {
@@ -385,5 +402,150 @@ function deleteFromUzivateleWhereId($id) {
     $stmt = $conn->prepare(" DELETE FROM uzivatele WHERE id = $id");
     $stmt->execute();
 
+    return $stmt;
+}
+
+function deleteFromProduktyWhereId($id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" DELETE FROM produkty WHERE id = $id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function deleteFromDopravaWhereId($id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" DELETE FROM doprava WHERE id_doprava = $id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromProduktyWhereIdEqualsId() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM produkty WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function updateProdukty() {
+    $conn = connectToDatabase();
+
+    $nazev = $_POST["nazev"];
+    $cena = $_POST["cena"];
+    $rok_vydani = $_POST["rok_vydani"];
+    $delka = $_POST["delka"];
+    $id_kategorie_produktu = $_POST["id_kategorie_produktu"];
+    $popis = $_POST["popis"];
+    $popis_dlouhy = $_POST["popis_dlouhy"];
+    $video_odkaz = $_POST["video_odkaz"];
+
+    $stmt = $conn->prepare("UPDATE produkty SET ID = :ID, nazev = :nazev, cena = :cena, rok_vydani = :rok_vydani, delka = :delka, id_kategorie_produktu = :id_kategorie_produktu, popis = :popis, popis_dlouhy = :popis_dlouhy, video_odkaz = :video_odkaz WHERE ID = :ID");
+
+    $stmt->bindParam(':ID', $_SESSION["edit_id"]);
+    $stmt->bindParam(':nazev', $nazev);
+    $stmt->bindParam(':cena', $cena);
+    $stmt->bindParam(':rok_vydani', $rok_vydani);
+    $stmt->bindParam(':delka', $delka);
+    $stmt->bindParam(':id_kategorie_produktu', $id_kategorie_produktu);
+    $stmt->bindParam(':popis', $popis);
+    $stmt->bindParam(':popis_dlouhy', $popis_dlouhy);
+    $stmt->bindParam(':video_odkaz', $video_odkaz);
+    $stmt->execute();
+
+    header("Location: index.php?page=account");
+
+    return $stmt;
+}
+
+function insertIntoProdukty() {
+    $conn = connectToDatabase();
+
+    $file = $_FILES['obrazek'];
+    $file_name = $file['name'];
+    $file_type = $file ['type'];
+    $file_size = $file ['size'];
+    $file_path = $file ['tmp_name'];
+    move_uploaded_file ($file_path,'C:/xampp/htdocs/IWWW_SEM/IMG/'.$file_name);
+
+    $nazev = $_POST["nazev"];
+    $cena = $_POST["cena"];
+    $rok_vydani = $_POST["rok_vydani"];
+    $delka = $_POST["delka"];
+    $id_kategorie_produktu = $_POST["id_kategorie_produktu"];
+    $popis = $_POST["popis"];
+    $popis_dlouhy = $_POST["popis_dlouhy"];
+    $video_odkaz = $_POST["video_odkaz"];
+
+    //=====================
+
+       // $target_dir = "IWWW/IMG/";
+       // $target_file = $target_dir . basename($_FILES["obrazek"]["name"]);
+       // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+//=====================
+
+    $stmt = $conn->prepare("INSERT INTO produkty (nazev, cena, rok_vydani, delka, obrazek, id_kategorie_produktu, popis, popis_dlouhy, video_odkaz) VALUES (:nazev, :cena, :rok_vydani, :delka, '$file_name', :id_kategorie_produktu, :popis, :popis_dlouhy, :video_odkaz)");
+
+    $stmt->bindParam(':nazev', $nazev);
+    $stmt->bindParam(':cena', $cena);
+    $stmt->bindParam(':rok_vydani', $rok_vydani);
+    $stmt->bindParam(':delka', $delka);
+    //$stmt->bindParam(':obrazek', $obrazek);
+    $stmt->bindParam(':id_kategorie_produktu', $id_kategorie_produktu);
+    $stmt->bindParam(':popis', $popis);
+    $stmt->bindParam(':popis_dlouhy', $popis_dlouhy);
+    $stmt->bindParam(':video_odkaz', $video_odkaz);
+
+    $stmt->execute();
+    return $stmt;
+}
+
+function selectFromDopravaWhereIdEqualsId() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT nazev, cena FROM doprava WHERE id_doprava = :id");
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function updateDoprava() {
+    $conn = connectToDatabase();
+
+    $nazev = $_POST["nazev"];
+    $cena = $_POST["cena"];
+
+    $stmt = $conn->prepare("UPDATE doprava SET nazev = :nazev, cena = :cena WHERE id_doprava = :id");
+
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->bindParam(':nazev', $nazev);
+    $stmt->bindParam(':cena', $cena);
+
+    $stmt->execute();
+
+    header("Location: index.php?page=account");
+
+    return $stmt;
+}
+
+function insertIntoDoprava() {
+    $conn = connectToDatabase();
+
+    $nazev = $_POST["nazev"];
+    $cena = $_POST["cena"];
+
+    $stmt = $conn->prepare("INSERT INTO doprava (nazev, cena) VALUES (:nazev, :cena)");
+
+    $stmt->bindParam(':nazev', $nazev);
+    $stmt->bindParam(':cena', $cena);
+
+    $stmt->execute();
     return $stmt;
 }

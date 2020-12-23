@@ -37,7 +37,7 @@ $_SESSION["celkova_cena"] = 0;
                 <p></p>
                 <p class="kosik_nadpis">Celkem</p>
                 <p></p>
-                <img class="kosik_obrazek" src="data:image/jpeg;base64,<?php echo base64_encode($catalog["obrazek"])?>">
+                <img class="kosik_obrazek" src="../IMG/<?php echo $catalog["obrazek"] ?>" class="katalog_obrazek">
                 <p id="sloupec_2"><?php echo $catalog["nazev"] ?></p>
                 <p id="sloupec_3"><?php echo $catalog["popis"] ?></p>
                 <p id="sloupec_4"><?php echo $catalog["cena"] ?> Kč</p>

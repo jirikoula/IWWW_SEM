@@ -74,7 +74,7 @@ if($_SESSION["role"] == 1) {
             <a href='index.php?page=account&action=create' title='Vytvořit záznam'>Vytvořit nového uživatele &#x2710</a>
     </section>
     <section class="formular_sekce_admin">
-        <h2 id="h2_form">OBJEDNÁVKY</h2>
+        <h2 id="h2_form">OBJEDNÁVKY - /TODO - JOIN TABULEK@@@@@@@@@@@@@</h2>
         <table>
             <tr>
                 <th>Id</th>
@@ -155,9 +155,9 @@ if($_SESSION["role"] == 1) {
                     echo "<tr>";
                 }
 
-                function endChildren() { //TODO
-                    echo "<td><a href='index.php?page=../ADMINSTRATION/editUser&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='deleteUser.php?id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
+                function endChildren() {
+                    echo "<td><a href='index.php?page=account&action=edit_produkty&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                        "<td><a href='index.php?page=account&action=delete_produkty&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
                 }
             }
 
@@ -175,9 +175,57 @@ if($_SESSION["role"] == 1) {
 
             echo "</table>";
             ?>
+            <a href='index.php?page=account&action=create_produkty' title='Vytvořit záznam'>Vytvořit nový produkt &#x2710</a>
     </section>
     <section class="formular_sekce_admin">
         <h2 id="h2_form">DOPRAVA</h2>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Název</th>
+                <th>Cena</th>
+                <th>UPDATE</th>
+                <th>DELETE</th>
+            </tr>
+            <?php
+            class TabulkaDoprava extends RecursiveIteratorIterator {
+
+                private $id;
+
+                function __construct($it) {
+                    parent::__construct($it, self::LEAVES_ONLY);
+                }
+
+                function current() {
+                    return "<td contenteditable='true'>" . parent::current(). "</td>";
+                }
+
+                function beginChildren() {
+                    $this->id = parent::current();
+                    echo "<tr>";
+                }
+
+                function endChildren() {
+                    echo "<td><a href='index.php?page=account&action=edit_doprava&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                        "<td><a href='index.php?page=account&action=delete_doprava&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
+                }
+            }
+
+            try {
+                $stmt = $conn->prepare("SELECT id_doprava, nazev, cena FROM doprava");
+                $stmt->execute();
+
+                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                foreach(new TabulkaDoprava(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                    echo $v;
+                }
+            } catch(PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+
+            echo "</table>";
+            ?>
+            <a href='index.php?page=account&action=create_doprava' title='Vytvořit záznam'>Vytvořit nový typ dopravy &#x2710</a>
     </section>
     <section class="formular_sekce_admin">
         <h2 id="h2_form">KATEGORIE PRODUKTU</h2>
