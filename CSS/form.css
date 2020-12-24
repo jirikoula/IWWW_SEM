@@ -13,6 +13,12 @@ input, select, textarea {
     margin: 10px;
 }
 
+.radek_formular_katalog {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+
 .formular_sekce {
     background-color: #f4f4f4;
     margin: auto;
@@ -96,7 +102,7 @@ input, select, textarea {
     border: 2px solid black;
     font-weight: bold;
     font-size: 12px;
-    margin-left: 30px;
+    margin-left: 5px;
     width: 120px;
     font-family: Arial
 }

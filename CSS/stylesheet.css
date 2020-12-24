@@ -94,7 +94,12 @@ h2 {
 
 /* [KOSIK] */
 #h2_black {
-    color:black;
+    color: black;
+}
+
+#h3_black {
+    color: black;
+    font-size: 26px;
 }
 
 #h2_kosik {
@@ -194,6 +199,12 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.sekce_katalog_tlacitka {
+    flex-wrap: wrap;
+    justify-content: center;
+    display: inline-block;
 }
 
 .sekce_katalog_article {

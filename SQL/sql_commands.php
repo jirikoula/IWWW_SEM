@@ -64,29 +64,98 @@ function selectAllFromProdukty() {
     return $stmt;
 }
 
-function selectAllFromProduktyNejlevnejsi() {
+function selectAllFromProduktyNejlevnejsi($rok_vydani) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY cena");
-    $stmt->execute();
+    if($_SESSION["filter"] != NULL) {
+        if ($_SESSION["filter"] >= "2019") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["filter"] <= "2018") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY cena");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY cena");
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY cena");
+        $stmt->execute();
+    }
 
     return $stmt;
 }
 
-function selectAllFromProduktyNejdrazsi() {
+function selectAllFromProduktyNejdrazsi($rok_vydani) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY cena DESC");
-    $stmt->execute();
+    if($_SESSION["filter"] != NULL) {
+        if ($_SESSION["filter"] >= "2019") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["filter"] <= "2018") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY cena DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY cena DESC");
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY cena DESC");
+        $stmt->execute();
+    }
 
     return $stmt;
 }
 
-function selectAllFromProduktyNejstarsi() {
+function selectAllFromProduktyNejstarsi($rok_vydani) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty ORDER BY id DESC");
-    $stmt->execute();
+    if($_SESSION["filter"] != NULL) {
+        if ($_SESSION["filter"] >= "2019") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY id");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["filter"] <= "2018") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY id");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY id");
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY id");
+        $stmt->execute();
+    }
+
+    return $stmt;
+}
+
+function selectAllFromProduktyNejnovejsi($rok_vydani) {
+    $conn = connectToDatabase();
+
+    if($_SESSION["filter"] != NULL) {
+        if ($_SESSION["filter"] >= "2019") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY id DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["filter"] <= "2018") {
+            $stmt = $conn->prepare("SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY id DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY id DESC");
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM produkty ORDER BY id DESC");
+        $stmt->execute();
+    }
 
     return $stmt;
 }
@@ -113,11 +182,32 @@ function selectAllFromProduktyBind($key) {
 function selectAllFromProduktyBindYear($rok_vydani) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani");
-    $stmt->bindParam(':rok_vydani', $rok_vydani);
-    $stmt->execute();
-    if($_SESSION["sort"] == "nejlevnejsi") {
-        selectAllFromProduktyNejlevnejsi();
+    if ($_SESSION["sort"] != NULL) {
+        if ($_SESSION["sort"] == "nejlevnejsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejdrazsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejnovejsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY id");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejstarsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY id DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani");
+        $stmt->bindParam(':rok_vydani', $rok_vydani);
+        $stmt->execute();
     }
 
     return $stmt;
@@ -126,9 +216,33 @@ function selectAllFromProduktyBindYear($rok_vydani) {
 function selectAllFromProduktyBindYearr($rok_vydani) {
     $conn = connectToDatabase();
 
-    $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani");
-    $stmt->bindParam(':rok_vydani', $rok_vydani);
-    $stmt->execute();
+    if ($_SESSION["sort"] != NULL) {
+        if ($_SESSION["sort"] == "nejlevnejsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY cena");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejdrazsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY cena DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejnovejsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY id");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else if ($_SESSION["sort"] == "nejstarsi") {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani ORDER BY id DESC");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani");
+            $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->execute();
+        }
+    } else {
+        $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani <= :rok_vydani");
+        $stmt->bindParam(':rok_vydani', $rok_vydani);
+        $stmt->execute();
+    }
 
     return $stmt;
 }

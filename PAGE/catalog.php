@@ -2,8 +2,11 @@
 include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
+error_reporting(0);
 
 $catalog = "";
+
+$rok_vydani = $_GET["filter"];
 
 if($_GET["filter"] != NULL) {
     $_SESSION["filter"] = $_GET["filter"];
@@ -13,16 +16,22 @@ if($_GET["sort"] != NULL) {
     $_SESSION["sort"] = $_GET["sort"];
 }
 
-echo $_SESSION["filter"];
-echo $_SESSION["sort"];
+if ($_SESSION["filter"] != NULL) {
+    $rok_vydani = $_SESSION["filter"];
+}
+
+if ($_GET["filter"] == "0") {
+    $_SESSION["filter"] = NULL;
+}
+
 if ($_GET["sort"] == "nejlevnejsi") {
-    $stmt = selectAllFromProduktyNejlevnejsi();
+    $stmt = selectAllFromProduktyNejlevnejsi($rok_vydani);
 } else if ($_GET["sort"] == "nejdrazsi") {
-    $stmt = selectAllFromProduktyNejdrazsi();
-} else if ($_GET["sort"] == "nejnovejsi") {
-    $stmt = selectAllFromProduktyNejstarsi();
+    $stmt = selectAllFromProduktyNejdrazsi($rok_vydani);
 } else if ($_GET["sort"] == "nejstarsi") {
-    $stmt = selectAllFromProdukty();
+    $stmt = selectAllFromProduktyNejstarsi($rok_vydani);
+} else if ($_GET["sort"] == "nejnovejsi") {
+    $stmt = selectAllFromProduktyNejnovejsi($rok_vydani);
 } else {
     $stmt = selectAllFromProdukty();
 }
@@ -41,32 +50,35 @@ if ($stmt->rowCount() >= 1) {
     echo "NEODPOVÍDÁ ŽÁDNÉMU FILTRU!";
 }
 ?>
-<h2 id="h2_black">Nabídka filmů</h2>
-<section class="sekce_katalog">
+<h2 id="h3_black">Nabídka filmů</h2>
+<section class="sekce_katalog_tlacitka">
 <h3 class="nadpis_katalog">Řazení:</h3>
-<div class="radek_formular">
+<div class="radek_formular_katalog">
     <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejlevnejsi&filter=&id=">Od nejlevnějšího</a>
 </div>
-<div class="radek_formular">
+<div class="radek_formular_katalog">
     <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejdrazsi&filter=&id=">Od nejdražšího</a>
 </div>
-<div class="radek_formular">
+<div class="radek_formular_katalog">
     <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejnovejsi&filter=&id=">Od nejnovějšího</a>
 </div>
-<div class="radek_formular">
+<div class="radek_formular_katalog">
     <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejstarsi&filter=&id=">Od nejstaršího</a>
 </div>
 </section>
-<section class="sekce_katalog">
+<section class="sekce_katalog_tlacitka">
 <h3 class="nadpis_katalog">Filtrování:</h3>
-    <div class="radek_formular">
+    <div class="radek_formular_katalog">
         <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2018&id=">Rok 2018 a méně</a>
     </div>
-    <div class="radek_formular">
+    <div class="radek_formular_katalog">
         <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2019&id=">Rok 2019</a>
     </div>
-    <div class="radek_formular">
+    <div class="radek_formular_katalog">
         <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2020&id=">Rok 2020</a>
+    </div>
+    <div class="radek_formular_katalog">
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=0&id=">Zrušit filtr</a>
     </div>
 </section>
 <section class="sekce_katalog">
