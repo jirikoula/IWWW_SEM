@@ -184,8 +184,10 @@ function selectAllFromProduktyBindYear($rok_vydani) {
 
     if ($_SESSION["sort"] != NULL) {
         if ($_SESSION["sort"] == "nejlevnejsi") {
-            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena");
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani LIMIT '1', '4' ORDER BY cena ");
             $stmt->bindParam(':rok_vydani', $rok_vydani);
+            $stmt->bindParam(':test_start', $_SESSION["test_start"]);
+            $stmt->bindParam(':test_record', $_SESSION["test_record"]);
             $stmt->execute();
         } else if ($_SESSION["sort"] == "nejdrazsi") {
             $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena DESC");
