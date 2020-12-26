@@ -5,8 +5,8 @@
     <label for="hamburger">&#9776;</label>
     <input type="checkbox" id="hamburger"/>
     <nav id="nav">
+        <a href="index.php">DOMŮ</a>
         <a href="index.php?page=catalog&action=add&sort=&filter=&id=">FILMY</a>
-        <a href="index.php?page=george_club">GEORGE CLUB</a>
         <a href="index.php?page=kontakt_formular">KONTAKT</a>
     </nav>
     <nav id="nav_prihlaseni">

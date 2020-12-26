@@ -3,6 +3,10 @@ include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
+if (!empty($_GET["id"]) || !empty($_GET["action"])) {
+    administration_manager($_GET["action"], $_GET["id"]);
+}
+
 if($_SESSION["role"] == 1) {
     ?>
     <section class="formular_sekce">
@@ -66,22 +70,17 @@ if($_SESSION["role"] == 1) {
                 echo "Error: " . $e->getMessage();
             }
             echo "</table>";
-
-            if (!empty($_GET["id"]) || !empty($_GET["action"])) {
-                administration_manager($_GET["action"], $_GET["id"]);
-            }
             ?>
             <a href='index.php?page=account&action=create' title='Vytvořit záznam'>Vytvořit nového uživatele &#x2710</a>
     </section>
     <section class="formular_sekce_admin">
-        <h2 id="h2_form">OBJEDNÁVKY - /TODO - JOIN TABULEK@@@@@@@@@@@@@</h2>
+        <h2 id="h2_form">OBJEDNÁVKY</h2>
         <table>
             <tr>
-                <th>Id</th>
                 <th>Id objednávky</th>
-                <th>Id produktu</th>
-                <th>Počet kusů</th>
-                <th>Cena za kus</th>
+                <th>Jméno</th>
+                <th>Přijmení</th>
+                <th>Stav objednávky</th>
                 <th>UPDATE</th>
                 <th>DELETE</th>
             </tr>
@@ -103,14 +102,17 @@ if($_SESSION["role"] == 1) {
                     echo "<tr>";
                 }
 
-                function endChildren() { //TODO
-                    echo "<td><a href='index.php?page=../ADMINSTRATION/editUser&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='deleteUser.php?id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
+                function endChildren() {
+                    echo "<td><a href='index.php?page=account&action=edit_objednavky&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                        "<td><a href='index.php?page=account&action=delete_objednavky&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
                 }
             }
 
             try {
-                $stmt = $conn->prepare("SELECT * FROM objednavka_polozky");
+                $stmt = $conn->prepare("SELECT objednavky.id, adresa.jmeno, adresa.prijmeni, doprava.nazev, objednavky_stav.nazev FROM objednavky 
+            INNER JOIN doprava ON objednavky.id_doprava = doprava.id_doprava
+            INNER JOIN adresa ON objednavky.id_adresa = adresa.id
+            INNER JOIN objednavky_stav ON objednavky.id_stav = objednavky_stav.id");
                 $stmt->execute();
 
                 $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -229,6 +231,9 @@ if($_SESSION["role"] == 1) {
     </section>
     <section class="formular_sekce_admin">
         <h2 id="h2_form">KATEGORIE PRODUKTU</h2>
+    </section>
+    <section class="formular_sekce_admin">
+    <h2 id="h2_form">UŽIVATELSKÉ DOTAZY</h2>
     </section>
     <?php
 }

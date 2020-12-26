@@ -98,6 +98,15 @@ function administration_manager($action, $id)
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=account");
         }
+    } else if($action == "edit_objednavky") {
+        $_SESSION["edit_id"] = $id;
+        header("location: index.php?page=editObjednavky");
+    } else if($action == "delete_objednavky") {
+        $_SESSION["edit_id"] = $id;
+        $stmt = deleteFromObjednavkyWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
     }
 }
 

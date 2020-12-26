@@ -184,10 +184,8 @@ function selectAllFromProduktyBindYear($rok_vydani) {
 
     if ($_SESSION["sort"] != NULL) {
         if ($_SESSION["sort"] == "nejlevnejsi") {
-            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani LIMIT '1', '4' ORDER BY cena ");
+            $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena ");
             $stmt->bindParam(':rok_vydani', $rok_vydani);
-            $stmt->bindParam(':test_start', $_SESSION["test_start"]);
-            $stmt->bindParam(':test_record', $_SESSION["test_record"]);
             $stmt->execute();
         } else if ($_SESSION["sort"] == "nejdrazsi") {
             $stmt = $conn->prepare(" SELECT * FROM produkty WHERE rok_vydani = :rok_vydani ORDER BY cena DESC");
@@ -539,6 +537,17 @@ function deleteFromDopravaWhereId($id) {
     return $stmt;
 }
 
+function deleteFromObjednavkyWhereId($id) {
+    $conn = connectToDatabase();
+    $id_objednavky = $_SESSION["edit_id"];
+    $stmt = $conn->prepare("DELETE FROM objednavka_polozky WHERE id_objednavka = $id_objednavky");
+    $stmt->execute();
+    $stmt = $conn->prepare(" DELETE FROM objednavky WHERE id = $id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
 function selectAllFromProduktyWhereIdEqualsId() {
     $conn = connectToDatabase();
 
@@ -663,5 +672,50 @@ function insertIntoDoprava() {
     $stmt->bindParam(':cena', $cena);
 
     $stmt->execute();
+    return $stmt;
+}
+
+function selectFromObjednavkySTAV() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id_stav FROM objednavky WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function updateObjednavky() {
+    $conn = connectToDatabase();
+
+    $id_stav = $_POST["combo_stav"];
+
+    $stmt = $conn->prepare("UPDATE objednavky SET id_stav = :id_stav WHERE id = :id");
+
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->bindParam(':id_stav',$id_stav);
+
+    $stmt->execute();
+
+    header("Location: index.php?page=account");
+
+    return $stmt;
+}
+
+function selectAllFromObjednavkyIdObjednavky($id_objednavky) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM objednavky WHERE id = " . $id_objednavky);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectAllFromObjednavkyStav() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM objednavky_stav");
+    $stmt->execute();
+
     return $stmt;
 }
