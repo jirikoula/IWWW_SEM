@@ -34,7 +34,15 @@ if($_POST) {
         </div>
         <div class="radek_formular">
             <label class="label_formular">Kategorie produktu: </label>
-            <input name="id_kategorie_produktu" type="text">
+            <select id="kategorie" name="kategorie">
+                <?php
+                $stmt = $conn->prepare("SELECT nazev FROM kategorie");
+                $stmt->execute();
+                while ($radek = $stmt->fetch()) {
+                    echo "<option>" . $radek['nazev'] . "</option>";
+                }
+                ?>
+            </select>
         </div>
         <div class="radek_formular">
             <label class="label_formular">Popis: </label>

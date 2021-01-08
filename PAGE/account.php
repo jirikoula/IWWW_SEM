@@ -7,7 +7,7 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
     administration_manager($_GET["action"], $_GET["id"]);
 }
 
-if($_SESSION["role"] == 1) {
+if($_SESSION["role"] == 'registrovany') {
     ?>
     <section class="formular_sekce">
         <form action="index.php?page=account" method="post">
@@ -234,6 +234,56 @@ if($_SESSION["role"] == 1) {
     </section>
     <section class="formular_sekce_admin">
     <h2 id="h2_form">UŽIVATELSKÉ DOTAZY</h2>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Jméno</th>
+                <th>Přijmení</th>
+                <th>Email</th>
+                <th>Zpráva</th>
+                <th>Telefon</th>
+                <th>Kategorie</th>
+                <th>DELETE</th>
+            </tr>
+        <?php
+
+        class TabulkaDotazy extends RecursiveIteratorIterator {
+
+            private $id;
+
+            function __construct($it) {
+                parent::__construct($it, self::LEAVES_ONLY);
+            }
+
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
+            }
+
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
+            }
+
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=delete_dotaz&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
+            }
+        }
+
+
+        try {
+            $stmt = $conn->prepare("SELECT * FROM formular");
+            $stmt->execute();
+
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaDotazy(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+        echo "</table>";
+        ?>
     </section>
     <?php
 }

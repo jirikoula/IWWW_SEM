@@ -522,6 +522,9 @@ function deleteFromUzivateleWhereId($id) {
 function deleteFromProduktyWhereId($id) {
     $conn = connectToDatabase();
 
+    $stmt = $conn->prepare(" DELETE FROM kategorie_produkty WHERE id_produkt = $id");
+    $stmt->execute();
+
     $stmt = $conn->prepare(" DELETE FROM produkty WHERE id = $id");
     $stmt->execute();
 
@@ -532,6 +535,15 @@ function deleteFromDopravaWhereId($id) {
     $conn = connectToDatabase();
 
     $stmt = $conn->prepare(" DELETE FROM doprava WHERE id_doprava = $id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function deleteFromFormularWhereId($id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" DELETE FROM formular WHERE id = $id");
     $stmt->execute();
 
     return $stmt;
@@ -593,8 +605,6 @@ function insertIntoProdukty() {
 
     $file = $_FILES['obrazek'];
     $file_name = $file['name'];
-    $file_type = $file ['type'];
-    $file_size = $file ['size'];
     $file_path = $file ['tmp_name'];
     move_uploaded_file ($file_path,'C:/xampp/htdocs/IWWW_SEM/IMG/'.$file_name);
 
@@ -602,32 +612,35 @@ function insertIntoProdukty() {
     $cena = $_POST["cena"];
     $rok_vydani = $_POST["rok_vydani"];
     $delka = $_POST["delka"];
-    $id_kategorie_produktu = $_POST["id_kategorie_produktu"];
     $popis = $_POST["popis"];
     $popis_dlouhy = $_POST["popis_dlouhy"];
     $video_odkaz = $_POST["video_odkaz"];
 
-    //=====================
-
-       // $target_dir = "IWWW/IMG/";
-       // $target_file = $target_dir . basename($_FILES["obrazek"]["name"]);
-       // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-//=====================
-
-    $stmt = $conn->prepare("INSERT INTO produkty (nazev, cena, rok_vydani, delka, obrazek, id_kategorie_produktu, popis, popis_dlouhy, video_odkaz) VALUES (:nazev, :cena, :rok_vydani, :delka, '$file_name', :id_kategorie_produktu, :popis, :popis_dlouhy, :video_odkaz)");
+    $stmt = $conn->prepare("INSERT INTO produkty (nazev, cena, rok_vydani, delka, obrazek, popis, popis_dlouhy, video_odkaz) VALUES (:nazev, :cena, :rok_vydani, :delka, '$file_name', :popis, :popis_dlouhy, :video_odkaz)");
 
     $stmt->bindParam(':nazev', $nazev);
     $stmt->bindParam(':cena', $cena);
     $stmt->bindParam(':rok_vydani', $rok_vydani);
     $stmt->bindParam(':delka', $delka);
-    //$stmt->bindParam(':obrazek', $obrazek);
-    $stmt->bindParam(':id_kategorie_produktu', $id_kategorie_produktu);
     $stmt->bindParam(':popis', $popis);
     $stmt->bindParam(':popis_dlouhy', $popis_dlouhy);
     $stmt->bindParam(':video_odkaz', $video_odkaz);
 
     $stmt->execute();
+
+    $id_produkt = $conn->lastInsertId();
+    $nazev_kategorie = $_POST["kategorie"];
+    $stmt3 = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
+    $stmt3->bindParam(':nazev_kategorie', $nazev_kategorie);
+    $stmt3->execute();
+    $radek = $stmt3->fetch();
+    $id_kategorie = $radek["id"];
+
+    $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
+    $stmt2->bindParam(':id_produkt', $id_produkt);
+    $stmt2->bindParam(':id_kategorie', $id_kategorie);
+    $stmt2->execute();
+
     return $stmt;
 }
 

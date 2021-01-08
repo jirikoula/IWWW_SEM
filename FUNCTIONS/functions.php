@@ -107,6 +107,11 @@ function administration_manager($action, $id)
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=account");
         }
+    } else if($action == "delete_dotaz") {
+        $stmt = deleteFromFormularWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
     }
 }
 
