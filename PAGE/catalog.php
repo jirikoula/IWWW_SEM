@@ -2,8 +2,8 @@
 include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
-error_reporting(0);
 
+$_SESSION["filter"] = NULL;
 $catalog = "";
 
 $rok_vydani = $_GET["filter"];
@@ -97,6 +97,17 @@ if ($stmt->rowCount() >= 1) {
             </div>
             <div class="katalog_popis">
                 <b>Délka: </b><?php echo $item["delka"]; ?> min
+            </div>
+            <div class="katalog_popis">
+                <b>Kategorie: </b>
+                <?php
+                $id_produkt = $item["ID"];
+                $stmt = selectKategorie($id_produkt);
+
+                while($radek = $stmt->fetch()) {
+                    echo $radek["nazev"] . ' ';
+                }
+                ?>
             </div>
             <div class="katalog_popis">
                 <?php echo $item["popis"]; ?>

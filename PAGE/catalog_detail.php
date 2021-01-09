@@ -30,6 +30,17 @@ if ($stmt->rowCount() >= 1) {
                 <b>Délka: </b><?php echo $item["delka"]; ?> min
             </div>
             <div class="katalog_popis_detail">
+                <b>Kategorie: </b>
+                <?php
+                $id_produkt = $item["ID"];
+                $stmt = selectKategorie($id_produkt);
+
+                while($radek = $stmt->fetch()) {
+                    echo $radek["nazev"] . ' ';
+                }
+                ?>
+            </div>
+            <div class="katalog_popis_detail">
                 <b>Popis produktu: </b><?php echo $item["popis_dlouhy"]; ?>
             </div>
             <div class="katalog_popis_detail">

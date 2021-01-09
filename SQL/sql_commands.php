@@ -894,3 +894,15 @@ function selectFromFormularAdmin() {
 
     return $stmt;
 }
+
+function selectKategorie($id_produkt) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT kategorie.nazev FROM kategorie
+    INNER JOIN kategorie_produkty ON kategorie.id = kategorie_produkty.id_kategorie
+    INNER JOIN produkty ON kategorie_produkty.id_produkt = produkty.ID WHERE produkty.ID = :id_produkt");
+    $stmt->bindParam(':id_produkt',$id_produkt);
+    $stmt->execute();
+
+    return $stmt;
+}
