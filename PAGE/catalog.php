@@ -54,31 +54,31 @@ if ($stmt->rowCount() >= 1) {
 <section class="sekce_katalog_tlacitka">
     <h3 class="nadpis_katalog">Řazení:</h3>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejlevnejsi&filter=&id=">Od nejlevnějšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejlevnejsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejlevnějšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejdrazsi&filter=&id=">Od nejdražšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejdrazsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejdražšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejnovejsi&filter=&id=">Od nejnovějšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejnovejsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejnovějšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejstarsi&filter=&id=">Od nejstaršího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejstarsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejstaršího</a>
     </div>
 </section>
 <section class="sekce_katalog_tlacitka">
     <h3 class="nadpis_katalog">Filtrování:</h3>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2018&id=">Rok 2018 a méně</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"]?>&filter=2018&id=">Rok 2018 a méně</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2019&id=">Rok 2019</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"]?>&filter=2019&id=">Rok 2019</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=2020&id=">Rok 2020</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"]?>&filter=2020&id=">Rok 2020</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=&filter=0&id=">Zrušit filtr</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"]?>&filter=0&id=">Zrušit filtr</a>
     </div>
 </section>
 <section class="sekce_katalog">
@@ -113,7 +113,7 @@ if ($stmt->rowCount() >= 1) {
                 <?php echo $item["popis"]; ?>
                 <h4 class="katalog_cena"><?php echo $item["cena"]; ?> Kč</h4>
             </div>
-            <a href="index.php?page=catalog&action=add&sort=<?php $_GET["sort"] ?>&filter=&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
+            <a href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"] ?>&filter=<?php echo $_SESSION["filter"]?>&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
         </article>
         <?php
     }

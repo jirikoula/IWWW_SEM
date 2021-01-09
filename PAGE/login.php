@@ -18,8 +18,8 @@ if($_POST){
         $validation["heslo"] = "Musíte vyplnit heslo!";
     }
 
-    $heslo_u = $_POST["heslo"];
-    $uzivatelske_jmeno_u = $_POST["uzivatelske_jmeno"];
+    $heslo_u = htmlspecialchars($_POST["heslo"]);
+    $uzivatelske_jmeno_u = htmlspecialchars($_POST["uzivatelske_jmeno"]);
 
     if (count($validation) == 1) {
         if (empty($uzivatelske_jmeno_u) == false) {

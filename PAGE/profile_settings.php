@@ -15,13 +15,13 @@ if ($_POST) {
             $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id");
         } else {
             $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni, heslo = :heslo WHERE id = :id");
-            $param_heslo = $_POST["heslo"];
+            $param_heslo = htmlspecialchars($_POST["heslo"]);
             $hashPassword = password_hash($param_heslo, PASSWORD_DEFAULT);
             $stmt->bindParam(":heslo", $hashPassword, PDO::PARAM_STR);
         }
 
-        $param_jmeno = $_POST["jmeno"];
-        $param_prijmeni = $_POST["prijmeni"];
+        $param_jmeno = htmlspecialchars($_POST["jmeno"]);
+        $param_prijmeni = htmlspecialchars($_POST["prijmeni"]);
 
         $stmt->bindParam(":jmeno", $param_jmeno, PDO::PARAM_STR);
         $stmt->bindParam(":prijmeni", $param_prijmeni, PDO::PARAM_STR);

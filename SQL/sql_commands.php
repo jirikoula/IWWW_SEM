@@ -260,12 +260,12 @@ function deleteFromUzivatele() {
 function insertIntoFormular() {
     $conn = connectToDatabase();
 
-    $jmeno = $_POST["jmeno"];
-    $prijmeni = $_POST["prijmeni"];
-    $email = $_POST["email"];
-    $telefon = $_POST["telefon"];
-    $zprava = $_POST["zprava"];
-    $kategorie = $_POST["kategorie"];
+    $jmeno = htmlspecialchars($_POST["jmeno"]);
+    $prijmeni = htmlspecialchars($_POST["prijmeni"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $telefon = htmlspecialchars($_POST["telefon"]);
+    $zprava = htmlspecialchars($_POST["zprava"]);
+    $kategorie = htmlspecialchars($_POST["kategorie"]);
 
     $stmt = $conn->prepare("INSERT INTO formular (jmeno, prijmeni, email, telefon, zprava, kategorie) VALUES (:jmeno, :prijmeni, :email, :telefon, :zprava, :kategorie)");
 
@@ -284,13 +284,13 @@ function insertIntoFormular() {
 function insertIntoAdresa() {
     $conn = connectToDatabase();
 
-    $jmeno = $_POST["jmeno"];
-    $prijmeni = $_POST["prijmeni"];
-    $email = $_POST["email"];
-    $telefon = $_POST["telefon"];
-    $ulice = $_POST["ulice"];
-    $cislo_popisne = $_POST["cislo_popisne"];
-    $mesto = $_POST["mesto"];
+    $jmeno = htmlspecialchars($_POST["jmeno"]);
+    $prijmeni = htmlspecialchars($_POST["prijmeni"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $telefon = htmlspecialchars($_POST["telefon"]);
+    $ulice = htmlspecialchars($_POST["ulice"]);
+    $cislo_popisne = htmlspecialchars($_POST["cislo_popisne"]);
+    $mesto = htmlspecialchars($_POST["mesto"]);
 
     $stmt = $conn->prepare("INSERT INTO adresa (jmeno, prijmeni, email, telefon, ulice, cislo_popisne, mesto) VALUES (:jmeno, :prijmeni, :email, :telefon, :ulice, :cislo_popisne, :mesto)");
 
@@ -322,11 +322,11 @@ function selectFromUzivatele() {
 function updateUzivatele() {
     $conn = connectToDatabase();
 
-    $uzivatelske_jmeno_nove = $_POST["uzivatelske_jmeno"];
-    $email_novy = $_POST["email"];
-    $jmeno_nove = $_POST["jmeno"];
-    $prijmeni_nove = $_POST["prijmeni"];
-    $role_nova = $_POST["role"];
+    $uzivatelske_jmeno_nove = htmlspecialchars($_POST["uzivatelske_jmeno"]);
+    $email_novy = htmlspecialchars($_POST["email"]);
+    $jmeno_nove = htmlspecialchars($_POST["jmeno"]);
+    $prijmeni_nove = htmlspecialchars($_POST["prijmeni"]);
+    $role_nova = htmlspecialchars($_POST["role"]);
 
     echo $email_novy;
     echo $uzivatelske_jmeno_nove;
@@ -429,9 +429,9 @@ function selectIdFromUzivateleWhereEmail() {
 function insertIntoUzivatele() {
     $conn = connectToDatabase();
 
-    $userName = $_POST["uzivatelske_jmeno"];
-    $email = $_POST["email"];
-    $password = $_POST["heslo"];
+    $userName = htmlspecialchars($_POST["uzivatelske_jmeno"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $password = htmlspecialchars($_POST["heslo"]);
     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
     $role = 'registrovany';
     $stmt = $conn->prepare("INSERT INTO uzivatele (uzivatelske_jmeno, email, heslo, role) VALUES (:uzivatelske_jmeno, :email, :heslo, :role)");
@@ -448,11 +448,11 @@ function insertIntoUzivatele() {
 function insertIntoUzivateleAdmin() {
     $conn = connectToDatabase();
 
-    $userName = $_POST["uzivatelske_jmeno"];
-    $email = $_POST["email"];
-    $password = $_POST["heslo"];
+    $userName = htmlspecialchars($_POST["uzivatelske_jmeno"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $password = htmlspecialchars($_POST["heslo"]);
     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-    $role = $_POST["role"];
+    $role = htmlspecialchars($_POST["role"]);
     $stmt = $conn->prepare("INSERT INTO uzivatele (uzivatelske_jmeno, email, heslo, role) VALUES (:uzivatelske_jmeno, :email, :heslo, :role)");
 
     $stmt->bindParam(':uzivatelske_jmeno', $userName);
