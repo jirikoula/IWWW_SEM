@@ -23,228 +23,263 @@ if($_SESSION["role"] == 'registrovany') {
     </section>
     <?php
 } else {
-    //zdroj: w3school https://www.w3schools.com/php/php_mysql_select.asp, editováno
-    ?>
-    <section class="formular_sekce_admin">
-        <h2 id="h2_form">UŽIVATELÉ</h2>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Uživ. jméno</th>
-                <th>Email</th>
-                <th>Jmeno</th>
-                <th>Příjmení</th>
-                <th>Role</th>
-                <th>UPDATE</th>
-                <th>DELETE</th>
-            </tr>
-            <?php
-            class TabulkaUzivatele extends RecursiveIteratorIterator {
+//zdroj: w3school https://www.w3schools.com/php/php_mysql_select.asp, editováno
+?>
+<section class="formular_sekce_admin">
+    <h2 id="h2_form">UŽIVATELÉ</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Uživ. jméno</th>
+            <th>Email</th>
+            <th>Jmeno</th>
+            <th>Příjmení</th>
+            <th>Role</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+        <?php
+        class TabulkaUzivatele extends RecursiveIteratorIterator {
 
-                private $id;
+            private $id;
 
-                function current() {
-                    return "<td contenteditable='true'>" . parent::current(). "</td>";
-                }
-
-                function beginChildren() {
-                    $this->id = parent::current();
-                    echo "<tr>";
-                }
-
-                function endChildren() {
-                    echo "<td><a href='index.php?page=account&action=edit&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='index.php?page=account&action=delete&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" .
-                        "</tr>" . "\n";
-                }
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
             }
 
-            try {
-                $stmt = $conn->prepare("SELECT id, uzivatelske_jmeno, email, jmeno, prijmeni, role FROM uzivatele");
-                $stmt->execute();
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(new TabulkaUzivatele(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
-                    echo $v;
-                }
-            } catch(PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
-            echo "</table>";
-            ?>
-            <a href='index.php?page=account&action=create' title='Vytvořit záznam'>Vytvořit nového uživatele &#x2710</a>
-    </section>
-    <section class="formular_sekce_admin">
-        <h2 id="h2_form">OBJEDNÁVKY</h2>
-        <table>
-            <tr>
-                <th>Id objednávky</th>
-                <th>Jméno</th>
-                <th>Přijmení</th>
-                <th>Stav objednávky</th>
-                <th>UPDATE</th>
-                <th>DELETE</th>
-            </tr>
-            <?php
-            class TabulkaObjednavky extends RecursiveIteratorIterator {
-
-                private $id;
-
-                function __construct($it) {
-                    parent::__construct($it, self::LEAVES_ONLY);
-                }
-
-                function current() {
-                    return "<td contenteditable='true'>" . parent::current(). "</td>";
-                }
-
-                function beginChildren() {
-                    $this->id = parent::current();
-                    echo "<tr>";
-                }
-
-                function endChildren() {
-                    echo "<td><a href='index.php?page=account&action=edit_objednavky&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='index.php?page=account&action=delete_objednavky&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
-                }
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
             }
 
-            try {
-                $stmt = $conn->prepare("SELECT objednavky.id, adresa.jmeno, adresa.prijmeni, doprava.nazev, objednavky_stav.nazev FROM objednavky 
-            INNER JOIN doprava ON objednavky.id_doprava = doprava.id_doprava
-            INNER JOIN adresa ON objednavky.id_adresa = adresa.id
-            INNER JOIN objednavky_stav ON objednavky.id_stav = objednavky_stav.id");
-                $stmt->execute();
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=edit&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                    "<td><a href='index.php?page=account&action=delete&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" .
+                    "</tr>" . "\n";
+            }
+        }
 
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(new TabulkaObjednavky(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
-                    echo $v;
-                }
-            } catch(PDOException $e) {
-                echo "Error: " . $e->getMessage();
+        try {
+            $stmt = selectFromUzivateleAdmin();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaUzivatele(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "CHYBA: " . $e->getMessage();
+        }
+        ?>
+    </table>
+    <a href='index.php?page=account&action=create' title='Vytvořit záznam'>Vytvořit nového uživatele &#x2710</a>
+</section>
+
+<section class="formular_sekce_admin">
+    <h2 id="h2_form">OBJEDNÁVKY</h2>
+    <table>
+        <tr>
+            <th>Id objednávky</th>
+            <th>Jméno</th>
+            <th>Přijmení</th>
+            <th>Stav objednávky</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+        <?php
+        class TabulkaObjednavky extends RecursiveIteratorIterator {
+
+            private $id;
+
+            function __construct($it) {
+                parent::__construct($it, self::LEAVES_ONLY);
             }
 
-            echo "</table>";
-            ?>
-    </section>
-    <section class="formular_sekce_admin">
-        <h2 id="h2_form">PRODUKTY</h2>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Název</th>
-                <th>Cena</th>
-                <th>Rok vydání</th>
-                <th>Délka (min)</th>
-                <th>Video</th>
-                <th>UPDATE</th>
-                <th>DELETE</th>
-            </tr>
-            <?php
-            class TabulkaProdukty extends RecursiveIteratorIterator {
-
-                private $id;
-
-                function __construct($it) {
-                    parent::__construct($it, self::LEAVES_ONLY);
-                }
-
-                function current() {
-                    return "<td contenteditable='true'>" . parent::current(). "</td>";
-                }
-
-                function beginChildren() {
-                    $this->id = parent::current();
-                    echo "<tr>";
-                }
-
-                function endChildren() {
-                    echo "<td><a href='index.php?page=account&action=edit_produkty&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='index.php?page=account&action=delete_produkty&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
-                }
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
             }
 
-            try {
-                $stmt = $conn->prepare("SELECT ID, nazev, cena, rok_vydani, delka, video_odkaz FROM produkty");
-                $stmt->execute();
-
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(new TabulkaProdukty(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
-                    echo $v;
-                }
-            } catch(PDOException $e) {
-                echo "Error: " . $e->getMessage();
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
             }
 
-            echo "</table>";
-            ?>
-            <a href='index.php?page=account&action=create_produkty' title='Vytvořit záznam'>Vytvořit nový produkt &#x2710</a>
-    </section>
-    <section class="formular_sekce_admin">
-        <h2 id="h2_form">DOPRAVA</h2>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Název</th>
-                <th>Cena</th>
-                <th>UPDATE</th>
-                <th>DELETE</th>
-            </tr>
-            <?php
-            class TabulkaDoprava extends RecursiveIteratorIterator {
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=edit_objednavky&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                    "<td><a href='index.php?page=account&action=delete_objednavky&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" .
+                    "</tr>" . "\n";
+            }
+        }
 
-                private $id;
+        try {
+            $stmt = selectFromObjednavkyAdmin();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaObjednavky(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "CHYBA: " . $e->getMessage();
+        }
+        ?>
+    </table>
+</section>
+<section class="formular_sekce_admin">
+    <h2 id="h2_form">PRODUKTY</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Název</th>
+            <th>Cena</th>
+            <th>Rok vydání</th>
+            <th>Délka (min)</th>
+            <th>Video</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+        <?php
+        class TabulkaProdukty extends RecursiveIteratorIterator {
 
-                function __construct($it) {
-                    parent::__construct($it, self::LEAVES_ONLY);
-                }
+            private $id;
 
-                function current() {
-                    return "<td contenteditable='true'>" . parent::current(). "</td>";
-                }
-
-                function beginChildren() {
-                    $this->id = parent::current();
-                    echo "<tr>";
-                }
-
-                function endChildren() {
-                    echo "<td><a href='index.php?page=account&action=edit_doprava&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
-                        "<td><a href='index.php?page=account&action=delete_doprava&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
-                }
+            function __construct($it) {
+                parent::__construct($it, self::LEAVES_ONLY);
             }
 
-            try {
-                $stmt = $conn->prepare("SELECT id_doprava, nazev, cena FROM doprava");
-                $stmt->execute();
-
-                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                foreach(new TabulkaDoprava(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
-                    echo $v;
-                }
-            } catch(PDOException $e) {
-                echo "Error: " . $e->getMessage();
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
             }
 
-            echo "</table>";
-            ?>
-            <a href='index.php?page=account&action=create_doprava' title='Vytvořit záznam'>Vytvořit nový typ dopravy &#x2710</a>
-    </section>
-    <section class="formular_sekce_admin">
-        <h2 id="h2_form">KATEGORIE PRODUKTU</h2>
-    </section>
-    <section class="formular_sekce_admin">
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
+            }
+
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=edit_produkty&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                    "<td><a href='index.php?page=account&action=delete_produkty&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" .
+                    "</tr>" . "\n";
+            }
+        }
+
+        try {
+            $stmt = selectFromProduktyAdmin();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaProdukty(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "CHYBA: " . $e->getMessage();
+        }
+        ?>
+    </table>
+    <a href='index.php?page=account&action=create_produkty' title='Vytvořit záznam'>Vytvořit nový produkt &#x2710</a>
+</section>
+<section class="formular_sekce_admin">
+    <h2 id="h2_form">DOPRAVA</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Název</th>
+            <th>Cena</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+        <?php
+        class TabulkaDoprava extends RecursiveIteratorIterator {
+
+            private $id;
+
+            function __construct($it) {
+                parent::__construct($it, self::LEAVES_ONLY);
+            }
+
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
+            }
+
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
+            }
+
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=edit_doprava&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                    "<td><a href='index.php?page=account&action=delete_doprava&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" .
+                    "</tr>" . "\n";
+            }
+        }
+
+        try {
+            $stmt = selectFromDopravaAdmin();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaDoprava(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "CHYBA: " . $e->getMessage();
+        }
+        ?>
+    </table>
+    <a href='index.php?page=account&action=create_doprava' title='Vytvořit záznam'>Vytvořit nový typ dopravy &#x2710</a>
+</section>
+<section class="formular_sekce_admin">
+    <h2 id="h2_form">KATEGORIE PRODUKTU</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Název</th>
+            <th>UPDATE</th>
+            <th>DELETE</th>
+        </tr>
+        <?php
+
+        class TabulkaKategorie extends RecursiveIteratorIterator {
+
+            private $id;
+
+            function __construct($it) {
+                parent::__construct($it, self::LEAVES_ONLY);
+            }
+
+            function current() {
+                return "<td contenteditable='true'>" . parent::current(). "</td>";
+            }
+
+            function beginChildren() {
+                $this->id = parent::current();
+                echo "<tr>";
+            }
+
+            function endChildren() {
+                echo "<td><a href='index.php?page=account&action=edit_kategorie&id=$this->id' title='Editovat záznam'>&#x270e</a></td>" .
+                    "<td><a href='index.php?page=account&action=delete_kategorie&id=$this->id' title='Vymazat záznam'>&#x1F5D1</a></td>" . "</tr>" . "\n";
+            }
+        }
+
+        try {
+            $stmt = selectFromKategorieAdmin();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach(new TabulkaKategorie(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
+                echo $v;
+            }
+        } catch(PDOException $e) {
+            echo "CHYBA: " . $e->getMessage();
+        }
+        ?>
+    </table>
+    <a href='index.php?page=account&action=create_kategorie' title='Vytvořit záznam'>Vytvořit novou kategorii &#x2710</a>
+</section>
+<section class="formular_sekce_admin">
     <h2 id="h2_form">UŽIVATELSKÉ DOTAZY</h2>
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Jméno</th>
-                <th>Přijmení</th>
-                <th>Email</th>
-                <th>Zpráva</th>
-                <th>Telefon</th>
-                <th>Kategorie</th>
-                <th>DELETE</th>
-            </tr>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Jméno</th>
+            <th>Přijmení</th>
+            <th>Email</th>
+            <th>Zpráva</th>
+            <th>Telefon</th>
+            <th>Kategorie</th>
+            <th>DELETE</th>
+        </tr>
         <?php
 
         class TabulkaDotazy extends RecursiveIteratorIterator {
@@ -269,25 +304,16 @@ if($_SESSION["role"] == 'registrovany') {
             }
         }
 
-
         try {
-            $stmt = $conn->prepare("SELECT * FROM formular");
-            $stmt->execute();
-
+            $stmt = selectFromFormularAdmin();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach(new TabulkaDotazy(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
                 echo $v;
             }
         } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo "CHYBA: " . $e->getMessage();
         }
-
-        echo "</table>";
+        }
         ?>
-    </section>
-    <?php
-}
-?>
-
-
-
+    </table>
+</section>

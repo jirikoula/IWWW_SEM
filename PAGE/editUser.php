@@ -19,12 +19,8 @@ try {
     echo "CHYBA";
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    try {
-        $stmt = updateUzivatele();
-    } catch (PDOException $e) {
-        echo "CHYBA";
-    }
+if ($_POST) {
+    updateUzivatele();
 }
 ?>
 <body class ="body_index_form">
@@ -48,7 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="radek_formular">
             <label class="label_formular">Role: </label>
-            <input name="role" type="text" value="<?php echo $role; ?>">
+            <select id="role" name="role">
+                <option>administrator</option>
+                <option>registrovany</option>
+            </select>
         </div>
         <div class="radek_formular">
             <input id="submit" type="submit" value="Uložit">

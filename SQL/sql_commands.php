@@ -433,7 +433,26 @@ function insertIntoUzivatele() {
     $email = $_POST["email"];
     $password = $_POST["heslo"];
     $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-    $role = $_POST["role"] = 1;
+    $role = 'registrovany';
+    $stmt = $conn->prepare("INSERT INTO uzivatele (uzivatelske_jmeno, email, heslo, role) VALUES (:uzivatelske_jmeno, :email, :heslo, :role)");
+
+    $stmt->bindParam(':uzivatelske_jmeno', $userName);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':heslo', $hashPassword);
+    $stmt->bindParam(':role', $role);
+
+    $stmt->execute();
+    return $stmt;
+}
+
+function insertIntoUzivateleAdmin() {
+    $conn = connectToDatabase();
+
+    $userName = $_POST["uzivatelske_jmeno"];
+    $email = $_POST["email"];
+    $password = $_POST["heslo"];
+    $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+    $role = $_POST["role"];
     $stmt = $conn->prepare("INSERT INTO uzivatele (uzivatelske_jmeno, email, heslo, role) VALUES (:uzivatelske_jmeno, :email, :heslo, :role)");
 
     $stmt->bindParam(':uzivatelske_jmeno', $userName);
@@ -549,6 +568,15 @@ function deleteFromFormularWhereId($id) {
     return $stmt;
 }
 
+function deleteFromKategorieWhereId($id) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare(" DELETE FROM kategorie WHERE id = $id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
 function deleteFromObjednavkyWhereId($id) {
     $conn = connectToDatabase();
     $id_objednavky = $_SESSION["edit_id"];
@@ -582,14 +610,13 @@ function updateProdukty() {
     $popis_dlouhy = $_POST["popis_dlouhy"];
     $video_odkaz = $_POST["video_odkaz"];
 
-    $stmt = $conn->prepare("UPDATE produkty SET ID = :ID, nazev = :nazev, cena = :cena, rok_vydani = :rok_vydani, delka = :delka, id_kategorie_produktu = :id_kategorie_produktu, popis = :popis, popis_dlouhy = :popis_dlouhy, video_odkaz = :video_odkaz WHERE ID = :ID");
+    $stmt = $conn->prepare("UPDATE produkty SET ID = :ID, nazev = :nazev, cena = :cena, rok_vydani = :rok_vydani, delka = :delka, popis = :popis, popis_dlouhy = :popis_dlouhy, video_odkaz = :video_odkaz WHERE ID = :ID");
 
     $stmt->bindParam(':ID', $_SESSION["edit_id"]);
     $stmt->bindParam(':nazev', $nazev);
     $stmt->bindParam(':cena', $cena);
     $stmt->bindParam(':rok_vydani', $rok_vydani);
     $stmt->bindParam(':delka', $delka);
-    $stmt->bindParam(':id_kategorie_produktu', $id_kategorie_produktu);
     $stmt->bindParam(':popis', $popis);
     $stmt->bindParam(':popis_dlouhy', $popis_dlouhy);
     $stmt->bindParam(':video_odkaz', $video_odkaz);
@@ -728,6 +755,141 @@ function selectAllFromObjednavkyStav() {
     $conn = connectToDatabase();
 
     $stmt = $conn->prepare("SELECT * FROM objednavky_stav");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function insertIntoKategorie_Produkty() {
+    $conn = connectToDatabase();
+
+    $id_produkt = $_SESSION["edit_id"];
+    $nazev_kategorie = $_POST["kategorie"];
+
+    $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
+    $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
+    $stmt->execute();
+    $radek = $stmt->fetch();
+    $id_kategorie = $radek["id"];
+
+    $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
+    $stmt2->bindParam(':id_produkt', $id_produkt);
+    $stmt2->bindParam(':id_kategorie', $id_kategorie);
+    $stmt2->execute();
+
+    return $stmt;
+}
+
+function deleteFromKategorie_Produkty() {
+    $conn = connectToDatabase();
+
+    $nazev_kategorie = $_POST["kategorie_delete"];
+
+    $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
+    $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
+    $stmt->execute();
+    $radek = $stmt->fetch();
+    $id_kategorie = $radek["id"];
+
+    $stmt = $conn->prepare("DELETE FROM kategorie_produkty WHERE id_kategorie = :id_kategorie");
+    $stmt->bindParam(':id_kategorie', $id_kategorie);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function insertIntoKategorie() {
+    $conn = connectToDatabase();
+
+    $nazev = $_POST["nazev"];
+
+    $stmt = $conn->prepare("INSERT INTO kategorie (nazev) VALUES (:nazev)");
+
+    $stmt->bindParam(':nazev', $nazev);
+
+    $stmt->execute();
+    return $stmt;
+}
+
+function selectFromKategorieWhereIdEqualsId() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT nazev FROM kategorie WHERE id = :id");
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function updateKategorie() {
+    $conn = connectToDatabase();
+
+    $nazev = $_POST["nazev"];
+
+    $stmt = $conn->prepare("UPDATE kategorie SET nazev = :nazev WHERE id = :id");
+
+    $stmt->bindParam(':id', $_SESSION["edit_id"]);
+    $stmt->bindParam(':nazev', $nazev);
+
+    $stmt->execute();
+
+    header("Location: index.php?page=account");
+
+    return $stmt;
+}
+
+function selectFromUzivateleAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id, uzivatelske_jmeno, email, jmeno, prijmeni, role FROM uzivatele");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectFromObjednavkyAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT objednavky.id, adresa.jmeno, adresa.prijmeni, doprava.nazev, objednavky_stav.nazev FROM objednavky 
+            INNER JOIN doprava ON objednavky.id_doprava = doprava.id_doprava
+            INNER JOIN adresa ON objednavky.id_adresa = adresa.id
+            INNER JOIN objednavky_stav ON objednavky.id_stav = objednavky_stav.id");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectFromProduktyAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT ID, nazev, cena, rok_vydani, delka, video_odkaz FROM produkty");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectFromDopravaAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id_doprava, nazev, cena FROM doprava");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectFromKategorieAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM kategorie");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function selectFromFormularAdmin() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT * FROM formular");
     $stmt->execute();
 
     return $stmt;

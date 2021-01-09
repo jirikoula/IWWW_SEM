@@ -4,7 +4,7 @@ include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 if($_POST) {
-    insertIntoUzivatele();
+    insertIntoUzivateleAdmin();
     header("Location: index.php?page=account");
 }
 ?>
@@ -25,7 +25,10 @@ if($_POST) {
         </div>
         <div class="radek_formular">
             <label class="label_formular">Role: </label>
-            <input name="role" type="text">
+            <select id="role" name="role">
+                <option>administrator</option>
+                <option>registrovany</option>
+            </select>
         </div>
         <div class="radek_formular">
             <input id="submit" type="submit" value="Uložit">

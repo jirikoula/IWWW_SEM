@@ -112,6 +112,16 @@ function administration_manager($action, $id)
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=account");
         }
+    } else if($action == "edit_kategorie") {
+        $_SESSION["edit_id"] = $id;
+        header("location: index.php?page=editKategorie");
+    } else if ($action == "create_kategorie") {
+        header("location: index.php?page=createKategorie");
+    } else if ($action == "delete_kategorie") {
+        $stmt = deleteFromKategorieWhereId($id);
+        if ($stmt->rowCount() == 1) {
+            header("location: index.php?page=account");
+        }
     }
 }
 
