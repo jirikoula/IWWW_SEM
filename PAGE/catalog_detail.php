@@ -56,5 +56,5 @@ if ($stmt->rowCount() >= 1) {
     ?>
 </section>
 <div class="radek_formular">
-    <a class="tlacitko_univerzalni" href="index.php?page=catalog">Zpět na seznam filmů</a>
+    <a class="tlacitko_univerzalni" href="index.php?page=catalog&action=&sort=&filter=&id=">Zpět na seznam filmů</a>
 </div>

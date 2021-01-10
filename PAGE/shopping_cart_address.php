@@ -9,7 +9,6 @@
 </section>
 <section class="formular_sekce">
     <form action="index.php?page=order_summary" method="post">
-
         <div class="radek_formular">
             <label class="label_formular">Jméno: </label>
             <input name="jmeno" type="text" required value="<?php echo $_SESSION["jmeno"]?>">
@@ -38,7 +37,6 @@
             <label class="label_formular">Město: </label>
             <input name="mesto" type="text" required>
         </div>
-
         <div class="radek_formular">
             <a id=odkaz_kosik href="index.php?page=shopping_cart_shipping">Zpět</a>
         </div>

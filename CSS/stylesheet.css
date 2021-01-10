@@ -379,3 +379,15 @@ footer a {
     text-decoration-line: none;
     text-shadow: 1px 1px 1px black;
 }
+
+/* [VERZE PRO TISK] */
+@media print {
+    header, footer, #menu {
+        display: none;
+    }
+
+    body {
+        margin: 0;
+        background-color: #FFFFFF;
+    }
+}

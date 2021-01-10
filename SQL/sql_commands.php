@@ -503,32 +503,6 @@ function getSpecificItem($item_id) {
     return $radek;
 }
 
-function getBy($id, $klic, $kosik) //Shoduje se ID v košíku?
-{
-    foreach ($kosik as $key => $value) {
-        if ($value[$id] == $klic) {
-            return $key;
-        }
-    }
-}
-
-function getItemsOfCart() { //$key = id, $value = pocet
-    $i = 0;
-    $pole[][] = NULL;
-
-    foreach ($_SESSION["cart"] as $key => $value) {
-        $radek = getSpecificItem($key);
-
-        $pole[$i]["ID"] = $radek["ID"];
-        $pole[$i]["obrazek"] = $radek["obrazek"];
-        $pole[$i]["popis"] = $radek["popis"];
-        $pole[$i]["cena"] = $radek["cena"];
-        $i++;
-
-    }
-    return $pole;
-}
-
 function deleteFromUzivateleWhereId($id) {
     $conn = connectToDatabase();
 
@@ -635,15 +609,16 @@ function insertIntoProdukty() {
     $file_path = $file ['tmp_name'];
     move_uploaded_file ($file_path,'C:/xampp/htdocs/IWWW_SEM/IMG/'.$file_name);
 
-    $nazev = $_POST["nazev"];
-    $cena = $_POST["cena"];
-    $rok_vydani = $_POST["rok_vydani"];
-    $delka = $_POST["delka"];
-    $popis = $_POST["popis"];
-    $popis_dlouhy = $_POST["popis_dlouhy"];
-    $video_odkaz = $_POST["video_odkaz"];
+    $nazev = htmlspecialchars($_POST["nazev"]);
+    $cena = htmlspecialchars($_POST["cena"]);
+    $rok_vydani = htmlspecialchars($_POST["rok_vydani"]);
+    $delka = htmlspecialchars($_POST["delka"]);
+    $popis = htmlspecialchars($_POST["popis"]);
+    $popis_dlouhy = htmlspecialchars($_POST["popis_dlouhy"]);
+    $video_odkaz = htmlspecialchars($_POST["video_odkaz"]);
 
-    $stmt = $conn->prepare("INSERT INTO produkty (nazev, cena, rok_vydani, delka, obrazek, popis, popis_dlouhy, video_odkaz) VALUES (:nazev, :cena, :rok_vydani, :delka, '$file_name', :popis, :popis_dlouhy, :video_odkaz)");
+    $stmt = $conn->prepare("INSERT INTO produkty (nazev, cena, rok_vydani, delka, obrazek, popis, popis_dlouhy, video_odkaz) 
+                                    VALUES (:nazev, :cena, :rok_vydani, :delka, '$file_name', :popis, :popis_dlouhy, :video_odkaz)");
 
     $stmt->bindParam(':nazev', $nazev);
     $stmt->bindParam(':cena', $cena);
@@ -652,7 +627,6 @@ function insertIntoProdukty() {
     $stmt->bindParam(':popis', $popis);
     $stmt->bindParam(':popis_dlouhy', $popis_dlouhy);
     $stmt->bindParam(':video_odkaz', $video_odkaz);
-
     $stmt->execute();
 
     $id_produkt = $conn->lastInsertId();
@@ -905,4 +879,48 @@ function selectKategorie($id_produkt) {
     $stmt->execute();
 
     return $stmt;
+}
+
+function readJson($nazev, $cena) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare('INSERT INTO doprava(nazev, cena) values(:nazev, :cena)');
+    $stmt->bindValue('nazev', $nazev);
+    $stmt->bindValue('cena', $cena);
+    $stmt->execute();
+    header('Location: index.php?page=account');
+}
+
+function writeJson() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT ID, nazev, cena, delka, obrazek, rok_vydani, video_odkaz FROM produkty");
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function editProdukty() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT id_kategorie FROM kategorie_produkty WHERE id_produkt = ". $_SESSION["edit_id"]);
+    $stmt->execute();
+    $radek = $stmt->fetch();
+
+    $id_kategorie = $radek["id_kategorie"];
+    $stmt = $conn->prepare("SELECT nazev FROM kategorie WHERE id = ". $id_kategorie);
+    $stmt->execute();
+
+    return $stmt;
+}
+
+function insertIntoObjednavkaPolozky($id_objednavka, $id_produkt, $pocet_kusu, $cena_za_kus) {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("INSERT INTO objednavka_polozky(id_objednavka, id_produkt, pocet_kusu, cena_za_kus) VALUES (:id_objednavka, :id_produkt, :pocet_kusu, :cena_za_kus)");
+    $stmt->bindParam(':id_objednavka', $id_objednavka);
+    $stmt->bindParam(':id_produkt', $id_produkt);
+    $stmt->bindParam(':pocet_kusu', $pocet_kusu);
+    $stmt->bindParam(':cena_za_kus', $cena_za_kus);
+    $stmt->execute();
 }

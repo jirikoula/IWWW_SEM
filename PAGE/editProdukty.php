@@ -98,17 +98,10 @@ if (isset($_POST['process'])) {
             <label class="label_formular">Odebrat kategorii: </label>
             <select id="kategorie_delete" name="kategorie_delete">
                 <?php
-                $stmt = $conn->prepare("SELECT id_kategorie FROM kategorie_produkty WHERE id_produkt = ". $_SESSION["edit_id"]);
-                $stmt->execute();
-                $radek = $stmt->fetch();
-
-                $id_kategorie = $radek["id_kategorie"];
-                $stmt = $conn->prepare("SELECT nazev FROM kategorie WHERE id = ". $id_kategorie);
-                $stmt->execute();
+                $stmt = editProdukty();
                 while ($radek = $stmt->fetch()) {
                     echo "<option>" . $radek['nazev'] . "</option>";
                 }
-
                 ?>
 
             </select>

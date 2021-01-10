@@ -113,12 +113,13 @@ if ($stmt->rowCount() >= 1) {
                 <?php echo $item["popis"]; ?>
                 <h4 class="katalog_cena"><?php echo $item["cena"]; ?> Kč</h4>
             </div>
-            <a href="index.php?page=catalog&action=add&sort=<?php echo $_SESSION["sort"] ?>&filter=<?php echo $_SESSION["filter"]?>&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
+            <a href="index.php?page=catalog&action=add&sort=&filter=&id=<?php echo $item["ID"]; ?>" class="katalog_tlacitko">Koupit</a>
         </article>
         <?php
     }
     if ($_GET["action"] == "add" && !empty($_GET["id"])) {
         addToCart($_GET["id"]);
+        header('Location: index.php?page=shopping_cart');
     }
     ?>
 </section>

@@ -171,6 +171,26 @@ if($_SESSION["role"] == 'registrovany') {
         ?>
     </table>
     <a href='index.php?page=account&action=create_produkty' title='Vytvořit záznam'>Vytvořit nový produkt &#x2710</a>
+    <?php
+    //zdroj: https://www.kodingmadesimple.com/2015/01/convert-mysql-to-json-using-php.html, editováno
+    if(isset($_POST['buttonExport'])) {
+        $stmt = writeJson();
+
+        $pole = array();
+        while ($radek = $stmt->fetch()) {
+            $pole[] = $radek;
+        }
+
+        $soubor = fopen('..\JSON\export.json', 'w');
+        fwrite($soubor, json_encode($pole));
+        fclose($soubor);
+    }
+    ?>
+    <form action="index.php?page=account" method="post">
+        <div class="radek_formular">
+            <input id="submit" type="submit" value="Export JSON" name="buttonExport">
+        </div>
+    </form>
 </section>
 <section class="formular_sekce_admin">
     <h2 id="h2_form">DOPRAVA</h2>
@@ -219,6 +239,28 @@ if($_SESSION["role"] == 'registrovany') {
         ?>
     </table>
     <a href='index.php?page=account&action=create_doprava' title='Vytvořit záznam'>Vytvořit nový typ dopravy &#x2710</a>
+    <?php
+    //zdroj: https://www.kodingmadesimple.com/2014/12/how-to-insert-json-data-into-mysql-php.html, editováno
+    if(isset($_POST['buttonImport'])) {
+        $jsondata = file_get_contents('C:\xampp\htdocs\IWWW_SEM\JSON/'.$_FILES['jsonFile']['name']);
+
+        $data = json_decode($jsondata, true);
+
+        $nazev = $data["nazev"];
+        $cena = $data["cena"];
+        readJson($nazev, $cena);
+    }
+    ?>
+    <body class ="body_index_form">
+    <form action="index.php?page=account" method="post" enctype="multipart/form-data">
+        <div class="radek_formular">
+            <label class="label_formular">JSON soubor: </label>
+            <input type="file" name="jsonFile">
+        </div>
+        <div class="radek_formular">
+            <input id="submit" type="submit" value="Import JSON" name="buttonImport">
+        </div>
+    </form>
 </section>
 <section class="formular_sekce_admin">
     <h2 id="h2_form">KATEGORIE PRODUKTU</h2>

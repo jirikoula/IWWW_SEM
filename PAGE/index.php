@@ -13,7 +13,7 @@ include "html_head.php";
 include "menu.php";
 
 $pathToFile = null;
-if(!empty($_GET["page"]) && preg_match("/^[a-z0-9-\._]+$/", $_GET["page"])){
+if(!empty($_GET["page"]) && preg_match("/^[a-z0-9A-Z-\._]+$/", $_GET["page"])){
     $pathToFile = $_GET["page"] . ".php";
 }
 if (file_exists($pathToFile)) {

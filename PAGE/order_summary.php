@@ -7,13 +7,17 @@ if($_POST) {
     insertIntoAdresa();
 }
 
-$cart = getItemsOfCart();
-
 if (isset($_POST["order"])) {
     $orderId = transactionCatalog();
     foreach ($_SESSION["cart"] as $key => $value) {
-        $item = $cart[getBy("ID", $key, $cart)];
-        $conn->query('INSERT INTO objednavka_polozky(id_objednavka, id_produkt, pocet_kusu, cena_za_kus) VALUES(' . $orderId . ', ' . $item["ID"] . ', ' . $value["quantity"] . ',' . $item["cena"] . ')');
+        $radek = getSpecificItem($key);
+
+        $id_produkt = $radek["ID"];
+        $id_objednavka = $orderId;
+        $pocet_kusu = $value["quantity"];
+        $cena_za_kus = $radek["cena"];
+
+        insertIntoObjednavkaPolozky($id_objednavka, $id_produkt, $pocet_kusu, $cena_za_kus);
     }
     unset($_SESSION["cart"]);
 }
