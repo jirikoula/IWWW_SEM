@@ -5,7 +5,7 @@ $conn = connectToDatabase();
 
 if($_POST) {
     insertIntoDoprava();
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableDoprava");
 }
 
 ?>

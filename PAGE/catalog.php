@@ -54,16 +54,16 @@ if ($stmt->rowCount() >= 1) {
 <section class="sekce_katalog_tlacitka">
     <h3 class="nadpis_katalog">Řazení:</h3>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejlevnejsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejlevnějšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejlevnejsi&filter=<?php echo $_GET["filter"]?>&id=">Od nejlevnějšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejdrazsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejdražšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejdrazsi&filter=<?php echo $_GET["filter"]?>&id=">Od nejdražšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejnovejsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejnovějšího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejnovejsi&filter=<?php echo $_GET["filter"]?>&id=">Od nejnovějšího</a>
     </div>
     <div class="radek_formular_katalog">
-        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejstarsi&filter=<?php echo $_SESSION["filter"]?>&id=">Od nejstaršího</a>
+        <a class="tlacitko_univerzalni_katalog" href="index.php?page=catalog&action=add&sort=nejstarsi&filter=<?php echo $_GET["filter"]?>&id=">Od nejstaršího</a>
     </div>
 </section>
 <section class="sekce_katalog_tlacitka">

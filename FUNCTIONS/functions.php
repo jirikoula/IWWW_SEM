@@ -71,7 +71,7 @@ function administration_manager($action, $id)
     if($action == "delete") {
         $stmt = deleteFromUzivateleWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableUzivatele");
         }
     } else if($action == "create") {
         header("location: index.php?page=createUser");
@@ -86,7 +86,7 @@ function administration_manager($action, $id)
     } else if($action == "delete_produkty") {
         $stmt = deleteFromProduktyWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableProdukty");
         }
     } else if($action == "edit_doprava") {
         $_SESSION["edit_id"] = $id;
@@ -96,7 +96,7 @@ function administration_manager($action, $id)
     } else if($action == "delete_doprava") {
         $stmt = deleteFromDopravaWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableDoprava");
         }
     } else if($action == "edit_objednavky") {
         $_SESSION["edit_id"] = $id;
@@ -105,12 +105,12 @@ function administration_manager($action, $id)
         $_SESSION["edit_id"] = $id;
         $stmt = deleteFromObjednavkyWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableObjednavky");
         }
     } else if($action == "delete_dotaz") {
         $stmt = deleteFromFormularWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableDotazy");
         }
     } else if($action == "edit_kategorie") {
         $_SESSION["edit_id"] = $id;
@@ -120,7 +120,7 @@ function administration_manager($action, $id)
     } else if ($action == "delete_kategorie") {
         $stmt = deleteFromKategorieWhereId($id);
         if ($stmt->rowCount() == 1) {
-            header("location: index.php?page=account");
+            header("location: index.php?page=tableKategorie");
         }
     }
 }

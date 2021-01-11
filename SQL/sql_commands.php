@@ -328,13 +328,6 @@ function updateUzivatele() {
     $prijmeni_nove = htmlspecialchars($_POST["prijmeni"]);
     $role_nova = htmlspecialchars($_POST["role"]);
 
-    echo $email_novy;
-    echo $uzivatelske_jmeno_nove;
-    echo $jmeno_nove;
-    echo $prijmeni_nove;
-    echo $role_nova;
-    echo $_SESSION["edit_id"];
-
     $stmt = $conn->prepare("UPDATE uzivatele SET uzivatelske_jmeno = :uzivatelske_jmeno, email = :email, jmeno = :jmeno, prijmeni = :prijmeni, role = :role WHERE id = :id");
 
     $stmt->bindParam(':id', $_SESSION["edit_id"]);
@@ -345,9 +338,7 @@ function updateUzivatele() {
     $stmt->bindParam(':role', $role_nova);
     $stmt->execute();
 
-    header("Location: index.php?page=account");
-
-    return $stmt;
+    header("Location: index.php?page=tableUzivatele");
 }
 
 function selectFromDoprava() {
@@ -596,7 +587,7 @@ function updateProdukty() {
     $stmt->bindParam(':video_odkaz', $video_odkaz);
     $stmt->execute();
 
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableProdukty");
 
     return $stmt;
 }
@@ -669,7 +660,7 @@ function updateDoprava() {
 
     $stmt->execute();
 
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableDoprava");
 
     return $stmt;
 }
@@ -711,7 +702,7 @@ function updateObjednavky() {
 
     $stmt->execute();
 
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableObjednavky");
 
     return $stmt;
 }
@@ -807,7 +798,7 @@ function updateKategorie() {
 
     $stmt->execute();
 
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableKategorie");
 
     return $stmt;
 }
@@ -888,7 +879,7 @@ function readJson($nazev, $cena) {
     $stmt->bindValue('nazev', $nazev);
     $stmt->bindValue('cena', $cena);
     $stmt->execute();
-    header('Location: index.php?page=account');
+    header('Location: index.php?page=tableDoprava');
 }
 
 function writeJson() {
@@ -923,4 +914,13 @@ function insertIntoObjednavkaPolozky($id_objednavka, $id_produkt, $pocet_kusu, $
     $stmt->bindParam(':pocet_kusu', $pocet_kusu);
     $stmt->bindParam(':cena_za_kus', $cena_za_kus);
     $stmt->execute();
+}
+
+function selectNazevFromKategorie() {
+    $conn = connectToDatabase();
+
+    $stmt = $conn->prepare("SELECT nazev FROM kategorie");
+    $stmt->execute();
+
+    return $stmt;
 }

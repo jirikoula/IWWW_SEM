@@ -5,7 +5,7 @@ $conn = connectToDatabase();
 
 if($_POST) {
     insertIntoKategorie();
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableKategorie");
 }
 ?>
 <body class ="body_index_form">

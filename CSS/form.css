@@ -25,6 +25,12 @@ input, select, textarea {
     width: 500px;
     padding: 5px;
 }
+.formular_sekce_check {
+    background-color: #f4f4f4;
+    margin: auto;
+    width: 800px;
+    padding: 5px;
+}
 
 .formular_sekce_admin {
     background-color: #f4f4f4;

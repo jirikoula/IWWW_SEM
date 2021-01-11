@@ -5,7 +5,7 @@ $conn = connectToDatabase();
 
 if($_POST) {
     insertIntoUzivateleAdmin();
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableUzivatele");
 }
 ?>
 <body class ="body_index_form">

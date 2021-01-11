@@ -5,7 +5,7 @@ $conn = connectToDatabase();
 
 if($_POST) {
     insertIntoProdukty();
-    header("Location: index.php?page=account");
+    header("Location: index.php?page=tableProdukty");
 }
 
 ?>
@@ -36,8 +36,7 @@ if($_POST) {
             <label class="label_formular">Kategorie produktu: </label>
             <select id="kategorie" name="kategorie">
                 <?php
-                $stmt = $conn->prepare("SELECT nazev FROM kategorie");
-                $stmt->execute();
+                $stmt = selectNazevFromKategorie();
                 while ($radek = $stmt->fetch()) {
                     echo "<option>" . $radek['nazev'] . "</option>";
                 }
