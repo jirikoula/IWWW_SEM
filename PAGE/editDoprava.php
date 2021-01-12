@@ -1,9 +1,8 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$stmt = selectFromDopravaWhereIdEqualsId();
+$stmt = Doprava::selectFromDopravaWhereIdEqualsId();
 
 if ($stmt->rowCount() == 1) {
     $radek = $stmt->fetch();
@@ -12,7 +11,7 @@ if ($stmt->rowCount() == 1) {
 }
 
 if ($_POST) {
-    updateDoprava();
+    Doprava::updateDoprava();
 }
 ?>
 <body class ="body_index_form">

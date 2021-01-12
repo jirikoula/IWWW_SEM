@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 
 if($_SESSION["role"] == 'registrovany') {

@@ -1,10 +1,9 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 if($_POST) {
-    insertIntoProdukty();
+    Produkty::insertIntoProdukty();
     header("Location: index.php?page=tableProdukty");
 }
 
@@ -36,7 +35,7 @@ if($_POST) {
             <label class="label_formular">Kategorie produktu: </label>
             <select id="kategorie" name="kategorie">
                 <?php
-                $stmt = selectNazevFromKategorie();
+                $stmt = Kategorie::selectNazevFromKategorie();
                 while ($radek = $stmt->fetch()) {
                     echo "<option>" . $radek['nazev'] . "</option>";
                 }

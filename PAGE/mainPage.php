@@ -1,10 +1,9 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 $catalog = "";
-$stmt = selectAllFromProduktyWhereNevydano();
+$stmt = Produkty::selectAllFromProduktyWhereNevydano();
 
 if ($stmt->rowCount() >= 1) {
     $catalog = $stmt->fetchAll();

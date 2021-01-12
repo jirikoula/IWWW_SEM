@@ -1,28 +1,27 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 if($_POST) {
-    insertIntoAdresa();
+    Adresa::insertIntoAdresa();
 }
 
 if (isset($_POST["order"])) {
-    $orderId = transactionCatalog();
+    $orderId = Objednavky::transactionCatalog();
     foreach ($_SESSION["cart"] as $key => $value) {
-        $radek = getSpecificItem($key);
+        $radek = Produkty::getSpecificItem($key);
 
         $id_produkt = $radek["ID"];
         $id_objednavka = $orderId;
         $pocet_kusu = $value["quantity"];
         $cena_za_kus = $radek["cena"];
 
-        insertIntoObjednavkaPolozky($id_objednavka, $id_produkt, $pocet_kusu, $cena_za_kus);
+        Objednavky::insertIntoObjednavkaPolozky($id_objednavka, $id_produkt, $pocet_kusu, $cena_za_kus);
     }
     unset($_SESSION["cart"]);
 }
 
-selectFromAdresa();
+Adresa::selectFromAdresa();
 ?>
 <div id="kosik_nadpis">
     <h2 id="h2_kosik">Rekapitulace objednávky</h2>

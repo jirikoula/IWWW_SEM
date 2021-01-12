@@ -1,12 +1,11 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 $formularOdeslan = 0;
 
 if($_POST) {
-    $stmt = insertIntoFormular();
+    $stmt = Formular::insertIntoFormular();
     $formularOdeslan = 1;
 }
 

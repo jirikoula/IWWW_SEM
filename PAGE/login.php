@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -24,7 +23,7 @@ if($_POST){
     if (count($validation) == 1) {
         if (empty($uzivatelske_jmeno_u) == false) {
             if (empty($heslo_u) == false) {
-                $stmt = selectAllFromUzivatele($uzivatelske_jmeno_u);
+                $stmt = Uzivatele::selectAllFromUzivatele($uzivatelske_jmeno_u);
                 if ($stmt->rowCount() != 0) {
                     $radek = $stmt->fetch();
                     $uzivatel = $radek["uzivatelske_jmeno"];

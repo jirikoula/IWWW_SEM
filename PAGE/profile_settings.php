@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -7,7 +6,7 @@ $validation[] = NULL;
 $ulozeno = 0;
 $chyba_ucet = 0;
 
-$stmt = selectFromUzivatele();
+$stmt = Uzivatele::selectFromUzivatele();
 
 if ($_POST) {
     try {

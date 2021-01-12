@@ -1,12 +1,11 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 $catalog = "";
 
 $key = $_GET["id"];
-$stmt = selectAllFromProduktyBind($key);
+$stmt = Produkty::selectAllFromProduktyBind($key);
 
 if ($stmt->rowCount() >= 1) {
     $catalog = $stmt->fetchAll();
@@ -33,7 +32,7 @@ if ($stmt->rowCount() >= 1) {
                 <b>Kategorie: </b>
                 <?php
                 $id_produkt = $item["ID"];
-                $stmt = selectKategorie($id_produkt);
+                $stmt = Kategorie::selectKategorie($id_produkt);
 
                 while($radek = $stmt->fetch()) {
                     echo $radek["nazev"] . ' ';

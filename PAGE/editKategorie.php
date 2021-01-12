@@ -1,9 +1,8 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$stmt = selectFromKategorieWhereIdEqualsId();
+$stmt = Kategorie::selectFromKategorieWhereIdEqualsId();
 
 if ($stmt->rowCount() == 1) {
     $radek = $stmt->fetch();
@@ -11,7 +10,7 @@ if ($stmt->rowCount() == 1) {
 }
 
 if ($_POST) {
-    updateKategorie();
+    Kategorie::updateKategorie();
 }
 ?>
 <body class ="body_index_form">

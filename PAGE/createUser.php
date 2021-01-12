@@ -1,10 +1,9 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 if($_POST) {
-    insertIntoUzivateleAdmin();
+    Uzivatele::insertIntoUzivateleAdmin();
     header("Location: index.php?page=tableUzivatele");
 }
 ?>

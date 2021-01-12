@@ -1,12 +1,11 @@
 <?php
 include '../FUNCTIONS/functions.php';
-include '../SQL/sql_commands.php';
 ?>
 <h2 id="h2_form">MOJE OBJEDNÁVKY</h2>
 
 <section class="formular_sekce">
     <?php
-    $stmt = selectAllFromObjednavky();
+    $stmt = Objednavky::selectAllFromObjednavky();
 
     while ($radek = $stmt->fetch()) {
         ?>

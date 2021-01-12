@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -50,7 +49,7 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
         }
 
         try {
-            $stmt = selectFromProduktyAdmin();
+            $stmt = Produkty::selectFromProduktyAdmin();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach(new TabulkaProdukty(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
                 echo $v;
@@ -64,7 +63,7 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
     <?php
     //zdroj: https://www.kodingmadesimple.com/2015/01/convert-mysql-to-json-using-php.html, editováno
     if(isset($_POST['buttonExport'])) {
-        $stmt = writeJson();
+        $stmt = Json::writeJson();
 
         $pole = array();
         while ($radek = $stmt->fetch()) {

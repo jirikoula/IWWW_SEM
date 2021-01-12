@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -23,7 +22,7 @@ $_SESSION["celkova_cena"] = 0;
 
     if (empty($_SESSION["cart"]) == false) {
         foreach ($_SESSION["cart"] as $key => $value) { //Pro každou položku v košíku -->
-            $stmt = selectAllFromProduktyBind($key);
+            $stmt = Produkty::selectAllFromProduktyBind($key);
             $catalog = $stmt->fetch();
             $_SESSION["celkova_cena"] = $_SESSION["celkova_cena"] + ($value["quantity"] * $catalog["cena"]);
             ?>

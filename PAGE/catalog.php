@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -25,23 +24,23 @@ if ($_GET["filter"] == "0") {
 }
 
 if ($_GET["sort"] == "nejlevnejsi") {
-    $stmt = selectAllFromProduktyNejlevnejsi($rok_vydani);
+    $stmt = Produkty::selectAllFromProduktyNejlevnejsi($rok_vydani);
 } else if ($_GET["sort"] == "nejdrazsi") {
-    $stmt = selectAllFromProduktyNejdrazsi($rok_vydani);
+    $stmt = Produkty::selectAllFromProduktyNejdrazsi($rok_vydani);
 } else if ($_GET["sort"] == "nejstarsi") {
-    $stmt = selectAllFromProduktyNejstarsi($rok_vydani);
+    $stmt = Produkty::selectAllFromProduktyNejstarsi($rok_vydani);
 } else if ($_GET["sort"] == "nejnovejsi") {
-    $stmt = selectAllFromProduktyNejnovejsi($rok_vydani);
+    $stmt = Produkty::selectAllFromProduktyNejnovejsi($rok_vydani);
 } else {
-    $stmt = selectAllFromProdukty();
+    $stmt = Produkty::selectAllFromProdukty();
 }
 
 if ($_GET["filter"] == "2019") {
-    $stmt = selectAllFromProduktyBindYear("2019");
+    $stmt = Produkty::selectAllFromProduktyBindYear("2019");
 } else if ($_GET["filter"] == "2020") {
-    $stmt = selectAllFromProduktyBindYear("2020");
+    $stmt = Produkty::selectAllFromProduktyBindYear("2020");
 } else if ($_GET["filter"] == "2018"){
-    $stmt = selectAllFromProduktyBindYearr("2018");
+    $stmt = Produkty::selectAllFromProduktyBindYearr("2018");
 }
 
 if ($stmt->rowCount() >= 1) {
@@ -102,7 +101,7 @@ if ($stmt->rowCount() >= 1) {
                 <b>Kategorie: </b>
                 <?php
                 $id_produkt = $item["ID"];
-                $stmt = selectKategorie($id_produkt);
+                $stmt = Kategorie::selectKategorie($id_produkt);
 
                 while($radek = $stmt->fetch()) {
                     echo $radek["nazev"] . ' ';

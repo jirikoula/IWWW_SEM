@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -20,8 +19,8 @@ if ($_POST) {
     }
 
     try {
-        $stmt = selectIdFromUzivateleWhereName();
-        $stmt2 = selectIdFromUzivateleWhereEmail();
+        $stmt = Uzivatele::selectIdFromUzivateleWhereName();
+        $stmt2 = Uzivatele::selectIdFromUzivateleWhereEmail();
 
         if ($stmt->rowCount() == 1) {
             $jmenoPouzito = 1;
@@ -29,7 +28,7 @@ if ($_POST) {
             $emailPouzity = 1;
         } else {
             if (count($validation) == 1) {
-                insertIntoUzivatele();
+                Uzivatele::insertIntoUzivatele();
                 $pridaniOk = 1;
             }
         }

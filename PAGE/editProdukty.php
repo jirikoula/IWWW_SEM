@@ -1,9 +1,8 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$stmt = selectAllFromProduktyWhereIdEqualsId();
+$stmt = Produkty::selectAllFromProduktyWhereIdEqualsId();
 
 $checked = ""; //--------!!!!
 
@@ -21,7 +20,7 @@ if ($stmt->rowCount() == 1) {
 
 if (isset($_POST['process'])) {
     if ($_POST['process'] == 'edit') {
-        updateProdukty();
+        Produkty::updateProdukty();
     } else if($_POST['process'] == 'add') {
         //insertIntoKategorie_Produkty();
 
@@ -70,7 +69,9 @@ if (isset($_POST['process'])) {
             */
         }
     } else if($_POST['process'] == 'delete') {
-        deleteFromKategorie_Produkty();
+        Kategorie::deleteFromKategorie_Produkty();
+    } else if($_POST['process'] == 'picture') {
+        Produkty::updatePictureProdukty();
     }
 }
 
@@ -124,34 +125,43 @@ if (isset($_POST['process'])) {
             <label class="label_formular">Volba kategorií: </label>
                 <?php
                 //------------
-                $checked_arr = array();
+                $id_produkt = $_SESSION["edit_id"];
+                $stmt = Kategorie::selectKategorie($id_produkt);
 
-                // Fetch checked values
-                $stmt = $conn->prepare("SELECT nazev FROM kategorie");
-                $stmt = $conn->prepare("SELECT nazev FROM kategorie");
-                $stmt->execute();
-                if($stmt->rowCount() > 0){
-                    $radek = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $checked_arr = explode(",", $radek['nazev']);
+                while($radek = $stmt->fetch()) {
+                    echo "<input type='checkbox' name='checkbox_kategorie[ ]' value='{$radek['nazev']}' checked>" . $radek['nazev'];
                 }
+                //Pokud se kategorie.id != kategorie_produkty.id WHERE id_produkt = $id_produkt
+                $stmt = $conn->prepare("SELECT nazev FROM kategorie WHERE id NOT IN 
+(SELECT kategorie.nazev FROM kategorie
+    INNER JOIN kategorie_produkty ON kategorie.id = kategorie_produkty.id_kategorie
+    INNER JOIN produkty ON kategorie_produkty.id_produkt = produkty.ID WHERE produkty.ID = :id_produkt)");
+                $stmt->bindParam(':id_produkt',$id_produkt);
+                $stmt->execute();
+                while ($radek = $stmt->fetch()) {
 
-                // Create checkboxes
-                $languages_arr = array("Akční","Fantasy","Dobrodružný","testtest", "Drama", "Hudební");
-                foreach($languages_arr as $language) {
-                    $checked = "";
-                    if (in_array($language, $checked_arr)) {
-                        $checked = "checked";
-                    }
-                    //echo "<input type='checkbox' name='checkbox_kategorie[ ]' value='$language' '$checked'>" . $language;
-                    echo '<input type="checkbox" name="lang[]" value="'.$language.'" '.$checked.' > '.$language.' <br/>';
+                    echo "<input type='checkbox' name='checkbox_kategorie[ ]' value='{$radek['nazev']}'>" . $radek['nazev'];
                 }
                 //-------------
-                $stmt = $conn->prepare("SELECT nazev FROM kategorie");
+                /*$stmt = $conn->prepare("SELECT nazev FROM kategorie");
                 $stmt->execute();
                 while ($radek = $stmt->fetch()) {
                   //  echo "<input type='checkbox' name='checkbox_kategorie[ ]' value='{$radek['nazev']}' '$checked'>" . $radek['nazev'];
-                }
+                }*/
                 ?>
+        </div>
+        <div class="radek_formular">
+            <input id="submit" type="submit" value="Uložit">
+        </div>
+    </form>
+</section>
+
+<section class="formular_sekce">
+    <form action="index.php?page=editProdukty" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="process" value="picture">
+        <div class="radek_formular">
+            <label class="label_formular">Nový obrázek produktu: </label>
+            <input name="obrazek" type="file" id="obrazek">
         </div>
         <div class="radek_formular">
             <input id="submit" type="submit" value="Uložit">

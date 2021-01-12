@@ -1,11 +1,10 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 $cena_za_dopravu = 0;
 
-$stmt = selectFromDoprava();
+$stmt = Doprava::selectFromDoprava();
 $radek = $stmt->fetchAll();
 ?>
 <section class="sekce_kosik">
@@ -37,8 +36,8 @@ $radek = $stmt->fetchAll();
 if (isset($_POST['submit'])) {
     if (!empty($_POST['radio'])) {
         $id_doprava = $_POST["radio"];
-        $cena_za_dopravu = getPrice($id_doprava);
-        $_SESSION["nazev_doprava"] = getName($id_doprava);
+        $cena_za_dopravu = Doprava::getPrice($id_doprava);
+        $_SESSION["nazev_doprava"] = Doprava::getName($id_doprava);
         $_SESSION["id_doprava"] = $id_doprava;
     }
 }

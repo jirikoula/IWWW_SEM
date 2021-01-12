@@ -1,10 +1,9 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
 try {
-    $stmt = selectFromUzivatele();
+    $stmt = Uzivatele::selectFromUzivatele();
 
     if ($stmt->rowCount() == 1) {
         $radek = $stmt->fetch();
@@ -20,7 +19,7 @@ try {
 }
 
 if ($_POST) {
-    updateUzivatele();
+    Uzivatele::updateUzivatele();
 }
 ?>
 <body class ="body_index_form">

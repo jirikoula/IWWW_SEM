@@ -69,7 +69,7 @@ function deleteFromCart($productId)
 function administration_manager($action, $id)
 {
     if($action == "delete") {
-        $stmt = deleteFromUzivateleWhereId($id);
+        $stmt = Uzivatele::deleteFromUzivateleWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableUzivatele");
         }
@@ -84,7 +84,7 @@ function administration_manager($action, $id)
     } else if($action == "create_produkty") {
         header("location: index.php?page=createProdukty");
     } else if($action == "delete_produkty") {
-        $stmt = deleteFromProduktyWhereId($id);
+        $stmt = Produkty::deleteFromProduktyWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableProdukty");
         }
@@ -94,7 +94,7 @@ function administration_manager($action, $id)
     } else if($action == "create_doprava") {
         header("location: index.php?page=createDoprava");
     } else if($action == "delete_doprava") {
-        $stmt = deleteFromDopravaWhereId($id);
+        $stmt = Doprava::deleteFromDopravaWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableDoprava");
         }
@@ -103,12 +103,12 @@ function administration_manager($action, $id)
         header("location: index.php?page=editObjednavky");
     } else if($action == "delete_objednavky") {
         $_SESSION["edit_id"] = $id;
-        $stmt = deleteFromObjednavkyWhereId($id);
+        $stmt = Objednavky::deleteFromObjednavkyWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableObjednavky");
         }
     } else if($action == "delete_dotaz") {
-        $stmt = deleteFromFormularWhereId($id);
+        $stmt = Formular::deleteFromFormularWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableDotazy");
         }
@@ -118,7 +118,7 @@ function administration_manager($action, $id)
     } else if ($action == "create_kategorie") {
         header("location: index.php?page=createKategorie");
     } else if ($action == "delete_kategorie") {
-        $stmt = deleteFromKategorieWhereId($id);
+        $stmt = Kategorie::deleteFromKategorieWhereId($id);
         if ($stmt->rowCount() == 1) {
             header("location: index.php?page=tableKategorie");
         }

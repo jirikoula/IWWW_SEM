@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -47,7 +46,7 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
         }
 
         try {
-            $stmt = selectFromDopravaAdmin();
+            $stmt = Doprava::selectFromDopravaAdmin();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach(new TabulkaDoprava(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
                 echo $v;
@@ -67,7 +66,7 @@ if(isset($_POST['buttonImport'])) {
 
     $nazev = $data["nazev"];
     $cena = $data["cena"];
-    readJson($nazev, $cena);
+    Json::readJson($nazev, $cena);
 }
 ?>
         <form action="index.php?page=tableDoprava" method="post" enctype="multipart/form-data">

@@ -1,9 +1,8 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$stmt = selectFromObjednavkySTAV();
+$stmt = Objednavky::selectFromObjednavkySTAV();
 
 if ($stmt->rowCount() == 1) {
     $radek = $stmt->fetch();
@@ -11,7 +10,7 @@ if ($stmt->rowCount() == 1) {
 }
 
 if ($_POST) {
-    updateObjednavky();
+    Objednavky::updateObjednavky();
 }
 ?>
 <body class ="body_index_form">
@@ -23,14 +22,14 @@ if ($_POST) {
 
     $id_objednavky = $_SESSION["edit_id"];
 
-    $stmt = selectAllFromObjednavkyIdObjednavky($id_objednavky);
+    $stmt = Objednavky::selectAllFromObjednavkyIdObjednavky($id_objednavky);
     $radek2 = $stmt->fetch();
     $id_dopravy = $radek2["id_doprava"];
 
-    $stmt_nazev_dopravy = selectAllFromDopravaWhereIdEqualsId($id_dopravy);
+    $stmt_nazev_dopravy = Doprava::selectAllFromDopravaWhereIdEqualsId($id_dopravy);
     $radek_doprava = $stmt_nazev_dopravy->fetch();
 
-    $stmt_nazev_stavu = selectAllFromObjednavkyStavWhereIdEqualsId($id_stav);
+    $stmt_nazev_stavu = Objednavky::selectAllFromObjednavkyStavWhereIdEqualsId($id_stav);
     $radek_nazev_stavu = $stmt_nazev_stavu->fetch();
     ?>
     <p><div class="odstavec_detail">Stav objednávky: </div><?php echo $radek_nazev_stavu["nazev"];?></p>
@@ -40,11 +39,11 @@ if ($_POST) {
     <?php
     $cena_dopravy = $radek_doprava["cena"];
 
-    $stmt = selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
+    $stmt = Objednavky::selectAllFromObjednavka_polozkyWhereIdEqualsId($id_objednavky);
 
     while($radek = $stmt->fetch()) {
         $id_produkt = $radek["id_produkt"];
-        $nazev = selectNazevFromProduktyWhereIDEqualsId($id_produkt);
+        $nazev = Produkty::selectNazevFromProduktyWhereIDEqualsId($id_produkt);
         ?>
         <p><div class="odstavec_detail">Název produktu: </div><?php echo $nazev["nazev"];?></p>
         <p><div class="odstavec_detail">Počet kusů: </div><?php echo $radek["pocet_kusu"];?></p>
@@ -65,7 +64,7 @@ if ($_POST) {
             <label class="label_formular">Stav objednávky: </label>
             <select name="combo_stav" id="combo_stav">
                 <?php
-                $stmt = selectAllFromObjednavkyStav();
+                $stmt = Objednavky::selectAllFromObjednavkyStav();
                 while($radek = $stmt->fetch()){
                     echo "<option value='".$radek["id"]."'>".$radek["nazev"]."</option>";
                 }

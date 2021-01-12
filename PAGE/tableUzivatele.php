@@ -1,5 +1,4 @@
 <?php
-include '../SQL/sql_commands.php';
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
@@ -47,7 +46,7 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
         }
 
         try {
-            $stmt = selectFromUzivateleAdmin();
+            $stmt = Uzivatele::selectFromUzivateleAdmin();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach(new TabulkaUzivatele(new RecursiveArrayIterator($stmt->fetchAll())) as $k=> $v) {
                 echo $v;
