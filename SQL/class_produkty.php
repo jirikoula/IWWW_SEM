@@ -93,17 +93,23 @@ class Produkty {
         $stmt->execute();
 
         $id_produkt = $conn->lastInsertId();
-        $nazev_kategorie = $_POST["kategorie"];
-        $stmt3 = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
-        $stmt3->bindParam(':nazev_kategorie', $nazev_kategorie);
-        $stmt3->execute();
-        $radek = $stmt3->fetch();
-        $id_kategorie = $radek["id"];
+        $checkbox_kategorie = $_POST['checkbox_kategorie'];
 
-        $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
-        $stmt2->bindParam(':id_produkt', $id_produkt);
-        $stmt2->bindParam(':id_kategorie', $id_kategorie);
-        $stmt2->execute();
+        for ($i = 0; $i < sizeof($checkbox_kategorie); $i++) {
+            $nazev_kategorie = $checkbox_kategorie[$i];
+
+            $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
+            $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
+            $stmt->execute();
+            $radek = $stmt->fetch();
+            $id_kategorie = $radek["id"];
+
+            $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
+            $stmt2->bindParam(':id_produkt', $id_produkt);
+            $stmt2->bindParam(':id_kategorie', $id_kategorie);
+            $stmt2->execute();
+
+        }
 
         return $stmt;
     }
@@ -298,7 +304,7 @@ class Produkty {
         return $stmt;
     }
 
-    function selectAllFromProduktyBindYearr($rok_vydani) {
+    function selectAllFromProduktyBindYearAndLess($rok_vydani) {
         $conn = connectToDatabase();
 
         if ($_SESSION["sort"] != NULL) {
@@ -328,6 +334,16 @@ class Produkty {
             $stmt->bindParam(':rok_vydani', $rok_vydani);
             $stmt->execute();
         }
+
+        return $stmt;
+    }
+
+    function selectObrazekFromProdukty($id) {
+        $conn = connectToDatabase();
+
+        $stmt = $conn->prepare(" SELECT obrazek FROM produkty WHERE ID = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
 
         return $stmt;
     }

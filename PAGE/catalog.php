@@ -35,12 +35,12 @@ if ($_GET["sort"] == "nejlevnejsi") {
     $stmt = Produkty::selectAllFromProdukty();
 }
 
-if ($_GET["filter"] == "2019") {
+if ($_GET["filter"] == "2018"){
+    $stmt = Produkty::selectAllFromProduktyBindYearAndLess("2018");
+} else if ($_GET["filter"] == "2019") {
     $stmt = Produkty::selectAllFromProduktyBindYear("2019");
 } else if ($_GET["filter"] == "2020") {
     $stmt = Produkty::selectAllFromProduktyBindYear("2020");
-} else if ($_GET["filter"] == "2018"){
-    $stmt = Produkty::selectAllFromProduktyBindYearr("2018");
 }
 
 if ($stmt->rowCount() >= 1) {

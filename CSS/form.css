@@ -68,6 +68,14 @@ input, select, textarea {
     font-weight: bold;
 }
 
+.label_formular_edit {
+    width: 200px;
+    font-size: 20px;
+    color: black;
+    text-shadow: 1px 0px 0px white;
+    font-weight: bold;
+}
+
 #odkaz_registrace {
     background-color: darkorange;
     color: black;

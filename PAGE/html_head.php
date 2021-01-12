@@ -5,6 +5,8 @@ include '../SQL/class_uzivatele.php';
 include '../SQL/class_kategorie.php';
 include '../SQL/class_produkty.php';
 include '../SQL/class_formular.php';
+include '../SQL/class_objednavky.php';
+include '../SQL/class_JSON.php';
 ?>
 <head>
     <meta charset="UTF-8">

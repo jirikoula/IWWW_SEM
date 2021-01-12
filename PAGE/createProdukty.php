@@ -9,7 +9,7 @@ if($_POST) {
 
 ?>
 <body class ="body_index_form">
-<section class="formular_sekce">
+<section class="formular_sekce_check">
     <form action="index.php?page=createProdukty" method="post" enctype="multipart/form-data">
         <div class="radek_formular">
             <label class="label_formular">Název: </label>
@@ -33,14 +33,13 @@ if($_POST) {
         </div>
         <div class="radek_formular">
             <label class="label_formular">Kategorie produktu: </label>
-            <select id="kategorie" name="kategorie">
                 <?php
                 $stmt = Kategorie::selectNazevFromKategorie();
                 while ($radek = $stmt->fetch()) {
-                    echo "<option>" . $radek['nazev'] . "</option>";
+                    echo "<input type='checkbox' name='checkbox_kategorie[ ]' value='{$radek['nazev']}' >" . $radek['nazev'];
                 }
                 ?>
-            </select>
+            </div>
         </div>
         <div class="radek_formular">
             <label class="label_formular">Popis: </label>

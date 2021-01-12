@@ -81,24 +81,6 @@ class Kategorie {
         return $stmt;
     }
 
-    function deleteFromKategorie_Produkty() {
-        $conn = connectToDatabase();
-
-        $nazev_kategorie = $_POST["kategorie_delete"];
-
-        $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
-        $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
-        $stmt->execute();
-        $radek = $stmt->fetch();
-        $id_kategorie = $radek["id"];
-
-        $stmt = $conn->prepare("DELETE FROM kategorie_produkty WHERE id_kategorie = :id_kategorie");
-        $stmt->bindParam(':id_kategorie', $id_kategorie);
-        $stmt->execute();
-
-        return $stmt;
-    }
-
     function editProdukty() {
         $conn = connectToDatabase();
 
@@ -117,20 +99,26 @@ class Kategorie {
         $conn = connectToDatabase();
 
         $id_produkt = $_SESSION["edit_id"];
-        $nazev_kategorie = $_POST["kategorie"];
-
-        $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
-        $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
+        $stmt = $conn->prepare("DELETE FROM kategorie_produkty WHERE id_produkt = :id_produkt");
+        $stmt->bindParam(':id_produkt', $id_produkt);
         $stmt->execute();
-        $radek = $stmt->fetch();
-        $id_kategorie = $radek["id"];
 
-        $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
-        $stmt2->bindParam(':id_produkt', $id_produkt);
-        $stmt2->bindParam(':id_kategorie', $id_kategorie);
-        $stmt2->execute();
+        $checkbox_kategorie = $_POST['checkbox_kategorie'];
 
+        for ($i = 0; $i < sizeof($checkbox_kategorie); $i++) {
+            $nazev_kategorie = $checkbox_kategorie[$i];
+
+            $stmt = $conn->prepare("SELECT id FROM kategorie WHERE nazev = :nazev_kategorie");
+            $stmt->bindParam(':nazev_kategorie', $nazev_kategorie);
+            $stmt->execute();
+            $radek = $stmt->fetch();
+            $id_kategorie = $radek["id"];
+
+            $stmt2 = $conn->prepare("INSERT INTO kategorie_produkty(id_produkt, id_kategorie) VALUES (:id_produkt, :id_kategorie)");
+            $stmt2->bindParam(':id_produkt', $id_produkt);
+            $stmt2->bindParam(':id_kategorie', $id_kategorie);
+            $stmt2->execute();
+        }
         return $stmt;
     }
-
 }
