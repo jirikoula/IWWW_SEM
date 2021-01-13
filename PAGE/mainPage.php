@@ -9,7 +9,6 @@ if ($stmt->rowCount() >= 1) {
     $catalog = $stmt->fetchAll();
 }
 ?>
-
 <section id="hero">
     <h1 class="nadpis">George Movies</h1>
 </section>

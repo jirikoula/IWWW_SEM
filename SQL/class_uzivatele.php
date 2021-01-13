@@ -121,4 +121,42 @@ class Uzivatele {
 
         header("Location: index.php?page=tableUzivatele");
     }
+
+    function updateUzivateleWithoutPw()  {
+        $conn = connectToDatabase();
+
+        $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id");
+
+        $param_jmeno = htmlspecialchars($_POST["jmeno"]);
+        $param_prijmeni = htmlspecialchars($_POST["prijmeni"]);
+
+        $stmt->bindParam(":jmeno", $param_jmeno, PDO::PARAM_STR);
+        $stmt->bindParam(":prijmeni", $param_prijmeni, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
+
+        $_SESSION["jmeno"] = $param_jmeno;
+        $_SESSION["prijmeni"] = $param_prijmeni;
+        $stmt->execute();
+    }
+
+    function updateUzivateleWithPw() {
+        $conn = connectToDatabase();
+
+        $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni, heslo = :heslo WHERE id = :id");
+
+        $param_heslo = htmlspecialchars($_POST["heslo"]);
+        $hashPassword = password_hash($param_heslo, PASSWORD_DEFAULT);
+        $stmt->bindParam(":heslo", $hashPassword, PDO::PARAM_STR);
+
+        $param_jmeno = htmlspecialchars($_POST["jmeno"]);
+        $param_prijmeni = htmlspecialchars($_POST["prijmeni"]);
+
+        $stmt->bindParam(":jmeno", $param_jmeno, PDO::PARAM_STR);
+        $stmt->bindParam(":prijmeni", $param_prijmeni, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
+
+        $_SESSION["jmeno"] = $param_jmeno;
+        $_SESSION["prijmeni"] = $param_prijmeni;
+        $stmt->execute();
+    }
 }

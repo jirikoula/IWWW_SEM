@@ -2,7 +2,6 @@
 include '../FUNCTIONS/functions.php';
 $conn = connectToDatabase();
 
-$validation[] = NULL;
 $ulozeno = 0;
 $chyba_ucet = 0;
 
@@ -11,25 +10,10 @@ $stmt = Uzivatele::selectFromUzivatele();
 if ($_POST) {
     try {
         if(empty($_POST["heslo"]) == true) {
-            $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni WHERE id = :id");
+            Uzivatele::updateUzivateleWithoutPw();
         } else {
-            $stmt = $conn->prepare("UPDATE uzivatele SET jmeno = :jmeno, prijmeni = :prijmeni, heslo = :heslo WHERE id = :id");
-            $param_heslo = htmlspecialchars($_POST["heslo"]);
-            $hashPassword = password_hash($param_heslo, PASSWORD_DEFAULT);
-            $stmt->bindParam(":heslo", $hashPassword, PDO::PARAM_STR);
+            Uzivatele::updateUzivateleWithPw();
         }
-
-        $param_jmeno = htmlspecialchars($_POST["jmeno"]);
-        $param_prijmeni = htmlspecialchars($_POST["prijmeni"]);
-
-        $stmt->bindParam(":jmeno", $param_jmeno, PDO::PARAM_STR);
-        $stmt->bindParam(":prijmeni", $param_prijmeni, PDO::PARAM_STR);
-        $stmt->bindValue(":id", $_SESSION["id"], PDO::PARAM_INT);
-
-        $_SESSION["jmeno"] = $param_jmeno;
-        $_SESSION["prijmeni"] = $param_prijmeni;
-
-        $stmt->execute();
         $ulozeno = 1;
     } catch (PDOException $e) {
         $chyba_ucet = 1;
