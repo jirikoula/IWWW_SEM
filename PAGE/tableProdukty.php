@@ -62,12 +62,23 @@ if (!empty($_GET["id"]) || !empty($_GET["action"])) {
     <a href='index.php?page=tableProdukty&action=create_produkty' title='Vytvořit záznam'>Vytvořit nový produkt &#x2710</a>
     <?php
     //zdroj: https://www.kodingmadesimple.com/2015/01/convert-mysql-to-json-using-php.html, editováno
+    //opraveno: https://stackoverflow.com/questions/2467945/how-to-generate-json-file-with-php
     if(isset($_POST['buttonExport'])) {
         $stmt = Json::writeJson();
 
         $pole = array();
+
         while ($radek = $stmt->fetch()) {
-            $pole[] = $radek;
+            $ID = $radek['ID'];
+            $nazev = $radek['nazev'];
+            $cena = $radek['cena'];
+            $delka = $radek['delka'];
+            $obrazek = $radek['obrazek'];
+            $rok_vydani = $radek['rok_vydani'];
+            $video_odkaz = $radek['video_odkaz'];
+
+            $pole[] = array('ID' => $ID,'nazev' => $nazev, 'cena' => $cena, 'delka' => $delka, 'obrazek' => $obrazek,
+                'rok_vydani' => $rok_vydani, 'video_odkaz' => $video_odkaz);
         }
 
         $soubor = fopen('..\JSON\export.json', 'w');
